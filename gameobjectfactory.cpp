@@ -92,16 +92,16 @@ GameObject* GameObjectFactory::newPlatformObject(int x, int y, int width, int he
 GameObject* GameObjectFactory::newRefereeObject(System *system)
 {
     GameObject *obj = new GameObject();
-	obj->insert(ATTR_GAMESTATE);
+	obj->insert(ATTR_ROUNDSTATE);
     obj->insert(ATTR_POSITION);
 	//obj->insert(ATTR_STATIC);
 
 	//obj->insert(ATTR_WINNER);
     obj->set(ATTR_POSITION, "x", 0, system);
     obj->set(ATTR_POSITION, "y", 0, system);
-	obj->set(ATTR_GAMESTATE,"inGame",0,system);
-	obj->set(ATTR_GAMESTATE,"paused",false,system);
-	obj->set(ATTR_GAMESTATE,"winner",NOBODY,system); //nobody nobody but you~
+	obj->set(ATTR_ROUNDSTATE,"roundEnd",false,system);
+	obj->set(ATTR_ROUNDSTATE,"paused",false,system);
+	obj->set(ATTR_ROUNDSTATE,"winner",NOBODY,system); //nobody nobody but you~
 
 	//obj->set(ATTR_STATIC, "static", true, system);
 

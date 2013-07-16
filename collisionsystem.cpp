@@ -136,8 +136,8 @@ void CollisionSystem::update()
 					//if other guy has up then GG for him
 					if(otherSword->get(ATTR_SWORDSTATE,"up").toBool()){
 						if(!o->get(ATTR_SWORDSTATE,"up").toBool()){
-							referee->set(ATTR_GAMESTATE,"winner",swordNum,this);
-							//referee->set(ATTR_GAMESTATE,"inGame",false,this);
+							referee->set(ATTR_ROUNDSTATE,"winner",swordNum,this);
+							referee->set(ATTR_ROUNDSTATE,"roundEnd",true,this);
 							cout<<"player "<<swordNum<<" wins!\n";
 						}else{
 							//both players have "UP" swords, so gotta bounce them back a lil
@@ -147,12 +147,12 @@ void CollisionSystem::update()
 						//if other guy has down 
 					}else if(otherSword->get(ATTR_SWORDSTATE,"down").toBool()){
 						if(!o->get(ATTR_SWORDSTATE,"down").toBool()&&!o->get(ATTR_SWORDSTATE,"up").toBool()){
-							referee->set(ATTR_GAMESTATE,"winner",swordNum,this);
-							//referee->set(ATTR_GAMESTATE,"inGame",false,this);
+							referee->set(ATTR_ROUNDSTATE,"winner",swordNum,this);
+							referee->set(ATTR_ROUNDSTATE,"roundEnd",true,this);
 							cout<<"player "<<swordNum<<" wins!\n";
 						}else if(o->get(ATTR_SWORDSTATE,"up").toBool()){
-							referee->set(ATTR_GAMESTATE,"winner",otherSwordNum,this);
-							//referee->set(ATTR_GAMESTATE,"inGame",false,this);
+							referee->set(ATTR_ROUNDSTATE,"winner",otherSwordNum,this);
+							referee->set(ATTR_ROUNDSTATE,"roundEnd",true,this);
 							cout<<"player "<<otherSwordNum<<" wins!\n";
 						}else{
 							//gotta bounce them back a lil
@@ -161,8 +161,8 @@ void CollisionSystem::update()
 						//if other guy has it straight
 					}else{
 						if(o->get(ATTR_SWORDSTATE,"down").toBool()||o->get(ATTR_SWORDSTATE,"up").toBool()){
-							referee->set(ATTR_GAMESTATE,"winner",otherSwordNum,this);
-							//referee->set(ATTR_GAMESTATE,"inGame",false,this);
+							referee->set(ATTR_ROUNDSTATE,"winner",otherSwordNum,this);
+							referee->set(ATTR_ROUNDSTATE,"roundEnd",true,this);
 							cout<<"player "<<otherSwordNum<<" wins!\n";
 						}else{
 							//gotta bounce them back a lil
@@ -173,9 +173,6 @@ void CollisionSystem::update()
 				}
 
 			}
-
-
-
 		}
 	}
 
@@ -186,7 +183,7 @@ GameObject* CollisionSystem::getReferee()
 	for (i = _repo->beginGroup(GRP_GAMEUTIL); i != _repo->endGroup(GRP_GAMEUTIL); ++i) {
 		GameObject *o = *i;
 
-		if (o->contains(ATTR_GAMESTATE)) {
+		if (o->contains(ATTR_ROUNDSTATE)) {
 			return o;
 		}
 	}

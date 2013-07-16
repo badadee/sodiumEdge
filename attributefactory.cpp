@@ -46,8 +46,8 @@ Attribute* AttributeFactory::create(AttributeType type)
 			(*newAttribute)["gravity"] = 0;			//bool true for affected by gravity
 			break;
 
-		case ATTR_GAMESTATE:
-			(*newAttribute)["inGame"] = 0;
+		case ATTR_ROUNDSTATE:
+			(*newAttribute)["roundEnd"] = 0;
 			(*newAttribute)["winner"] = 0;
 			(*newAttribute)["paused"] = 0;
 			break;
