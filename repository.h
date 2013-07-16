@@ -30,6 +30,7 @@ public:
     ObjectList::iterator beginGroup(GroupType groupType);
     ObjectList::iterator endGroup(GroupType groupType);
     void erase(GameObject* object);
+	void clean();
     void newGroup(GroupType group, AttributeType type);
     void newGroup(GroupType group, AttributeType type1, AttributeType type2);
     void newGroup(GroupType group, AttributeType type1, AttributeType type2, AttributeType type3);

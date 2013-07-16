@@ -18,7 +18,7 @@ Group::~Group()
 
 // registers an object if it contains the required attributes
 // unregisters an object if it does not contain the required attributes
-void Group::registerObject(GameObject *object)
+void Group::updateRegistry(GameObject *object)
 {
     // register object if valid and not already registered
     if (this->canRegister(object) && !this->contains(object)) {

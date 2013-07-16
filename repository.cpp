@@ -10,14 +10,14 @@ Repository::Repository()
 GameObject* Repository::newSwordObject(int x, int y, int width, int height, int playerNum, System *system)
 {    GameObject *newObject = GameObjectFactory::newSwordObject(x,y,width,height,playerNum,system);
     _gameObjectManager->push_back(newObject);
-    _groupManager->registerObject(newObject);
+    _groupManager->updateRegistry(newObject);
     return newObject;
 }
 
 GameObject* Repository::newPlayerObject(int x, int y, int width, int height, int playerNum, System *system)
 {    GameObject *newObject = GameObjectFactory::newPlayerObject(x,y,width,height,playerNum,system);
     _gameObjectManager->push_back(newObject);
-    _groupManager->registerObject(newObject);
+    _groupManager->updateRegistry(newObject);
     return newObject;
 }
 
@@ -25,7 +25,7 @@ GameObject* Repository::newPlatformObject(int x, int y, int width, int height, S
 {
     GameObject *newObject = GameObjectFactory::newPlatformObject(x,y,width,height,system);
     _gameObjectManager->push_back(newObject);
-    _groupManager->registerObject(newObject);
+    _groupManager->updateRegistry(newObject);
     return newObject;
 }
 
@@ -33,21 +33,21 @@ GameObject* Repository::newRefereeObject( System *system)
 {
     GameObject *newObject = GameObjectFactory::newRefereeObject(system);
     _gameObjectManager->push_back(newObject);
-    _groupManager->registerObject(newObject);
+    _groupManager->updateRegistry(newObject);
     return newObject;
 }
 
 GameObject* Repository::attach(GameObject *object, AttributeType attributeType)
 {
     object->insert(attributeType);
-    _groupManager->registerObject(object);
+    _groupManager->updateRegistry(object);
     return object;
 }
 
 GameObject* Repository::detach(GameObject *object, AttributeType attributeType)
 {
     object->remove(attributeType);
-    _groupManager->registerObject(object);
+    _groupManager->updateRegistry(object);
     return object;
 }
 
@@ -94,8 +94,19 @@ void Repository::erase(GameObject *object)
                 _gameObjectManager->end(),
                 object);
     _gameObjectManager->erase(pos);
-    _groupManager->registerObject(object);
+    _groupManager->updateRegistry(object);
     delete object;
+}
+
+void Repository::clean()
+{
+	GameObjectManager::iterator i;
+
+	for (i = _gameObjectManager->begin(); i != _gameObjectManager->end(); ++i)
+	{
+		GameObject *o = *i;
+		erase(o);
+	}
 }
 
 ObjectList::iterator Repository::beginGroup(GroupType groupType)

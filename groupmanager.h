@@ -17,7 +17,7 @@
 class GroupManager : public std::map<GroupType, Group*>
 {
 public:
-    void registerObject(GameObject *object);
+    void updateRegistry(GameObject *object);
     ~GroupManager();
 };
 

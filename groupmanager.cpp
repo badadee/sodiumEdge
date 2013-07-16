@@ -1,11 +1,11 @@
 #include "groupmanager.h"
 #include <algorithm>
 
-void GroupManager::registerObject(GameObject *object)
+void GroupManager::updateRegistry(GameObject *object)
 {
     GroupManager::iterator i;
     for (i = this->begin(); i != this->end(); ++i) {
-        i->second->registerObject(object);
+        i->second->updateRegistry(object);
     }
 }
 

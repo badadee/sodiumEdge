@@ -16,7 +16,7 @@ class Group
 {
 public:
     Group(std::vector<AttributeType> requiredAttributes);
-    void registerObject(GameObject* object);
+    void updateRegistry(GameObject* object);
     std::vector<AttributeType> requiredAttributes();
     std::vector<GameObject*>::iterator begin();
     std::vector<GameObject*>::iterator end();
