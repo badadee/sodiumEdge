@@ -21,6 +21,9 @@ private:
 	static const int _gravity = 2;
 	GameObject* getSword(int playerNum);
 	GameObject* getPlayer(int playerNum);
+	GameObject* getReferee();
+	void bounceBackPlayer();
+
 };
 
 #endif // COLLISIONSYSTEM_H

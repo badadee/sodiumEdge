@@ -41,6 +41,8 @@ GameObject* GameObjectFactory::newPlayerObject(int x, int y, int width, int heig
 	obj->insert(ATTR_PLAYERSTATE);
 	obj->insert(ATTR_SPRITE);
 	obj->insert(ATTR_GRAVITY);
+	//obj->insert(ATTR_FACING);
+	obj->set(ATTR_PLAYERSTATE, "facing", playerNum - 1, system);
 	//obj->insert(ATTR_STATIC);
     obj->set(ATTR_POSITION, "x", x, system);
     obj->set(ATTR_POSITION, "y", y, system);
@@ -52,6 +54,7 @@ GameObject* GameObjectFactory::newPlayerObject(int x, int y, int width, int heig
 	obj->set(ATTR_PLAYERSTATE, "jumping", false, system);
 	obj->set(ATTR_PLAYERSTATE, "onPlatform", true, system);
 	obj->set(ATTR_GRAVITY, "gravity", true, system);
+	
 	//obj->set(ATTR_STATIC, "static", false, system); //non-static obj
 
 	sf::RectangleShape *sprite = new sf::RectangleShape(sf::Vector2f((float)width, (float)height));
@@ -82,6 +85,25 @@ GameObject* GameObjectFactory::newPlatformObject(int x, int y, int width, int he
 	obj->set(ATTR_SPRITE, "sprite", sprite, system);
 
 	obj->set(ATTR_STATIC, "static", true, system);
+
+    return obj;
+}
+
+GameObject* GameObjectFactory::newRefereeObject(System *system)
+{
+    GameObject *obj = new GameObject();
+	obj->insert(ATTR_GAMESTATE);
+    obj->insert(ATTR_POSITION);
+	//obj->insert(ATTR_STATIC);
+
+	//obj->insert(ATTR_WINNER);
+    obj->set(ATTR_POSITION, "x", 0, system);
+    obj->set(ATTR_POSITION, "y", 0, system);
+	obj->set(ATTR_GAMESTATE,"inGame",0,system);
+	obj->set(ATTR_GAMESTATE,"paused",false,system);
+	obj->set(ATTR_GAMESTATE,"winner",NOBODY,system); //nobody nobody but you~
+
+	//obj->set(ATTR_STATIC, "static", true, system);
 
     return obj;
 }

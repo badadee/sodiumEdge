@@ -25,6 +25,7 @@ int main()
 	repo->newGroup(GRP_PHYSICS, ATTR_POSITION, ATTR_VELOCITY, ATTR_GRAVITY);
 	repo->newGroup(GRP_RENDER, ATTR_SPRITE, ATTR_POSITION, ATTR_RECTANGLE);
 	repo->newGroup(GRP_PLATFORM, ATTR_POSITION,ATTR_RECTANGLE,ATTR_STATIC);
+	repo->newGroup(GRP_GAMEUTIL, ATTR_POSITION,ATTR_GAMESTATE);
 
     // define some system or something
     InputSystem *inputSystem = new InputSystem(repo);
@@ -33,10 +34,11 @@ int main()
 	CollisionSystem *collisionSystem = new CollisionSystem(repo);
     // add some crap to the repository
 	repo->newPlatformObject(100, 500, 600, 100, inputSystem);
-	repo->newSwordObject(130, 440, 50, 10, 1, inputSystem);
+	repo->newSwordObject(130, 440, 50, 9, 1, inputSystem);
 	repo->newPlayerObject(100, 400, 30, 100, 1, inputSystem);
-	repo->newSwordObject(620, 440, 50, 10, 2, inputSystem);
+	repo->newSwordObject(620, 440, 50, 9, 2, inputSystem);
 	repo->newPlayerObject(670, 400, 30, 100, 2, inputSystem);
+	repo->newRefereeObject(collisionSystem);
 
     while (window->isOpen())
     {

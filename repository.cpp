@@ -29,6 +29,14 @@ GameObject* Repository::newPlatformObject(int x, int y, int width, int height, S
     return newObject;
 }
 
+GameObject* Repository::newRefereeObject( System *system)
+{
+    GameObject *newObject = GameObjectFactory::newRefereeObject(system);
+    _gameObjectManager->push_back(newObject);
+    _groupManager->registerObject(newObject);
+    return newObject;
+}
+
 GameObject* Repository::attach(GameObject *object, AttributeType attributeType)
 {
     object->insert(attributeType);

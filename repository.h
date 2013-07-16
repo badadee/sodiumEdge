@@ -24,6 +24,7 @@ public:
 	GameObject* newSwordObject(int x, int y, int width, int height, int playerNum, System *system);
 	GameObject* newPlayerObject(int x, int y, int width, int height, int playerNum, System *system);
 	GameObject* newPlatformObject(int x, int y, int width, int height, System *system);
+	GameObject* newRefereeObject(System *system);
     GameObject* attach(GameObject* object, AttributeType attributeType);
     GameObject* detach(GameObject* object, AttributeType attributeType);
     ObjectList::iterator beginGroup(GroupType groupType);

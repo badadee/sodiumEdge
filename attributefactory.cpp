@@ -24,6 +24,8 @@ Attribute* AttributeFactory::create(AttributeType type)
 		case ATTR_PLAYERSTATE:
 			(*newAttribute)["playerNum"] = 0;		//1 for player1, 2 for player2
 			(*newAttribute)["jumping"] = 0;			//bool true for jumping in the air
+			(*newAttribute)["onPlatform"] = 0;	
+			(*newAttribute)["facing"] = 0;	
 			break;
 
 		case ATTR_SPRITE:
@@ -44,6 +46,11 @@ Attribute* AttributeFactory::create(AttributeType type)
 			(*newAttribute)["gravity"] = 0;			//bool true for affected by gravity
 			break;
 
+		case ATTR_GAMESTATE:
+			(*newAttribute)["inGame"] = 0;
+			(*newAttribute)["winner"] = 0;
+			(*newAttribute)["paused"] = 0;
+			break;
         // invalid AttributeType
         default:
             delete newAttribute;
