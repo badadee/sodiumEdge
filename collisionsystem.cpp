@@ -137,7 +137,7 @@ void CollisionSystem::update()
 					if(otherSword->get(ATTR_SWORDSTATE,"up").toBool()){
 						if(!o->get(ATTR_SWORDSTATE,"up").toBool()){
 							referee->set(ATTR_GAMESTATE,"winner",swordNum,this);
-							referee->set(ATTR_GAMESTATE,"inGame",false,this);
+							//referee->set(ATTR_GAMESTATE,"inGame",false,this);
 							cout<<"player "<<swordNum<<" wins!\n";
 						}else{
 							//both players have "UP" swords, so gotta bounce them back a lil
@@ -148,11 +148,11 @@ void CollisionSystem::update()
 					}else if(otherSword->get(ATTR_SWORDSTATE,"down").toBool()){
 						if(!o->get(ATTR_SWORDSTATE,"down").toBool()&&!o->get(ATTR_SWORDSTATE,"up").toBool()){
 							referee->set(ATTR_GAMESTATE,"winner",swordNum,this);
-							referee->set(ATTR_GAMESTATE,"inGame",false,this);
+							//referee->set(ATTR_GAMESTATE,"inGame",false,this);
 							cout<<"player "<<swordNum<<" wins!\n";
 						}else if(o->get(ATTR_SWORDSTATE,"up").toBool()){
 							referee->set(ATTR_GAMESTATE,"winner",otherSwordNum,this);
-							referee->set(ATTR_GAMESTATE,"inGame",false,this);
+							//referee->set(ATTR_GAMESTATE,"inGame",false,this);
 							cout<<"player "<<otherSwordNum<<" wins!\n";
 						}else{
 							//gotta bounce them back a lil
@@ -162,7 +162,7 @@ void CollisionSystem::update()
 					}else{
 						if(o->get(ATTR_SWORDSTATE,"down").toBool()||o->get(ATTR_SWORDSTATE,"up").toBool()){
 							referee->set(ATTR_GAMESTATE,"winner",otherSwordNum,this);
-							referee->set(ATTR_GAMESTATE,"inGame",false,this);
+							//referee->set(ATTR_GAMESTATE,"inGame",false,this);
 							cout<<"player "<<otherSwordNum<<" wins!\n";
 						}else{
 							//gotta bounce them back a lil
@@ -241,6 +241,4 @@ void CollisionSystem::bounceBackPlayer()
 			sword->set(ATTR_POSITION,"x", sword->get(ATTR_POSITION,"x").toInt()+15, this);
 		}
 	}
-
-	
 }

@@ -33,7 +33,6 @@ void PhysicsSystem::update()
 
 		o->set(ATTR_POSITION, "x", x, this);
 		o->set(ATTR_POSITION, "y", y, this);
-
 	}
 
 	//This loop is for moving the sword with the player
