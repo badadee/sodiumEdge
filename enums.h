@@ -29,7 +29,8 @@ enum DirectionType{
 enum WinnerType {
 	NOBODY,
 	PLAYER1,
-	PLAYER2
+	PLAYER2,
+	DKO
 };
 enum GroupType {
 	GRP_GAMESTATE,

@@ -42,24 +42,24 @@ void InputSystem::update()
 		}
 
 		if (sf::Keyboard::isKeyPressed(upKey) && !sf::Keyboard::isKeyPressed(downKey) && !up) {
-			swordObject->set(ATTR_VELOCITY, "yVelocity", -10, this);
+			swordObject->set(ATTR_VELOCITY, "yVelocity", -11, this);
 			swordObject->set(ATTR_SWORDSTATE, "up", true, this);
 			break;
 		}
 		if (sf::Keyboard::isKeyPressed(downKey) && !sf::Keyboard::isKeyPressed(upKey) && !down) {
-			swordObject->set(ATTR_VELOCITY, "yVelocity", 10, this);
+			swordObject->set(ATTR_VELOCITY, "yVelocity", 11, this);
 			swordObject->set(ATTR_SWORDSTATE, "down", true, this);
 			break;
 		}
 
 		swordObject->set(ATTR_VELOCITY, "yVelocity", 0, this);				
 		if (!sf::Keyboard::isKeyPressed(upKey) && up) {
-			swordObject->set(ATTR_VELOCITY, "yVelocity", 10, this);
+			swordObject->set(ATTR_VELOCITY, "yVelocity", 11, this);
 			swordObject->set(ATTR_SWORDSTATE, "up", false, this);
 		}
 
 		if (!sf::Keyboard::isKeyPressed(downKey) && down) {
-			swordObject->set(ATTR_VELOCITY, "yVelocity", -10, this);
+			swordObject->set(ATTR_VELOCITY, "yVelocity", -11, this);
 			swordObject->set(ATTR_SWORDSTATE, "down", false, this);
 		}
 

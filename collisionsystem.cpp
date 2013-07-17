@@ -36,15 +36,17 @@ void CollisionSystem::update()
 
 			int x = o->get(ATTR_POSITION, "x").toInt();
 			int y = o->get(ATTR_POSITION, "y").toInt();
+			int sizeX = o->get(ATTR_RECTANGLE,"width").toInt();
+			int sizeY = o->get(ATTR_RECTANGLE,"height").toInt();
 
-			r = new IntRect(x,y,rect->getSize().x,rect->getSize().y);
+			r = new IntRect(x,y,sizeX,sizeY);
 
 			//check rectangle object against all platform rectangules for collision
 			for(pi = platforms.begin(); pi != platforms.end(); ++pi){
 				GameObject *pl = *pi;
-				platformRect = pl->get(ATTR_SPRITE,"sprite").toSprite();
+				//platformRect = pl->get(ATTR_SPRITE,"sprite").toSprite();
 				p = new IntRect (pl->get(ATTR_POSITION, "x").toInt(),pl->get(ATTR_POSITION, "y").toInt(),
-					platformRect->getSize().x,platformRect->getSize().y);
+					pl->get(ATTR_RECTANGLE,"width").toInt(),pl->get(ATTR_RECTANGLE,"height").toInt());
 
 				//check for intersection
 				if(r->intersects(*p,result))
@@ -72,13 +74,15 @@ void CollisionSystem::update()
 
 			int x = o->get(ATTR_POSITION, "x").toInt();
 			int y = o->get(ATTR_POSITION, "y").toInt();
+			int sizeX = o->get(ATTR_RECTANGLE,"width").toInt();
+			int sizeY = o->get(ATTR_RECTANGLE,"height").toInt();
 			GameObject *playerObject1 = this->getPlayer(1);
 			RectangleShape *player1 = playerObject1->get(ATTR_SPRITE, "sprite").toSprite();
 			GameObject *playerObject2 = this->getPlayer(2);
 			RectangleShape *player2 = playerObject2->get(ATTR_SPRITE, "sprite").toSprite();
-			int player1x = player1->getSize().x;
-			int player2x = player2->getSize().x;
-			int rectHeight = rect->getSize().y;
+			//int player1x = player1->getSize().x;
+			//int player2x = player2->getSize().x;
+			//int rectHeight = rect->getSize().y;
 			int swordHeldBy = 0;
 			int swordNum = 0;
 			int otherSwordNum = 0;
@@ -102,9 +106,9 @@ void CollisionSystem::update()
 			//check rectangle object against all platform rectangules for collision
 			for(pi = platforms.begin(); pi != platforms.end(); ++pi){
 				GameObject *pl = *pi;
-				platformRect = pl->get(ATTR_SPRITE,"sprite").toSprite();
+				//platformRect = pl->get(ATTR_SPRITE,"sprite").toSprite();
 				p = new IntRect (pl->get(ATTR_POSITION, "x").toInt(),pl->get(ATTR_POSITION, "y").toInt(),
-					platformRect->getSize().x,platformRect->getSize().y);
+					pl->get(ATTR_RECTANGLE,"width").toInt(),pl->get(ATTR_RECTANGLE,"height").toInt());
 
 				//check for intersection
 				if(r->intersects(*p,result))
@@ -113,47 +117,77 @@ void CollisionSystem::update()
 				}
 			}
 
+		}
+	}
+	for (i = _repo->beginGroup(GRP_SWORDS); i != _repo->endGroup(GRP_SWORDS); ++i) {
+			GameObject *o = *i;
+			int swordHeldBy = 0;
+			int swordNum = 0;
+			int otherSwordNum = 0;
+			int x = o->get(ATTR_POSITION, "x").toInt();
+			int y = o->get(ATTR_POSITION, "y").toInt();
+			int sizeX = o->get(ATTR_RECTANGLE,"width").toInt();
+			int sizeY = o->get(ATTR_RECTANGLE,"height").toInt();
 			//now for checking sword versus sword cases
 			//1. running versus sword
 			//2. running versus running (first guy to stop running wins)
 			//3. sword versus sword -different position(MIDDLE beats DOWN beats UP)
 			//4. sword versus sword -same position (knock both back by a bit)
 			//5. thrust ?
+			swordHeldBy = o->get(ATTR_SWORDSTATE,"heldBy").toInt();
+			if(swordHeldBy == 1){
+					otherSwordNum = 2;
+					swordNum = 1;
+					
+				}else {
+					swordNum = 2;
+					otherSwordNum = 1;
+					}
 			GameObject *referee = this->getReferee();
 			if(swordHeldBy ==0){
 				//cout<<"sword on ground\n";
 			}else if (swordHeldBy == swordNum){
 				
 				//gotta check if theres collision between sword vs otherPlaya
-				r = new IntRect(rect->getPosition().x,rect->getPosition().y,rect->getSize().x,rect->getSize().y);
+				r = new IntRect(x,y,sizeX,sizeY);
 				GameObject *otherSword = this->getSword(otherSwordNum);
-				RectangleShape *otherSwordRec = otherSword->get(ATTR_SPRITE,"sprite").toSprite();
-				RectangleShape *otherPlayerRec = this->getPlayer(otherSwordNum)->get(ATTR_SPRITE,"sprite").toSprite();
-				IntRect *otherPlayerRect = new IntRect(otherPlayerRec->getPosition().x,otherPlayerRec->getPosition().y, otherPlayerRec->getSize().x,otherPlayerRec->getSize().y);
-				IntRect *otherSwordRect = new IntRect(otherSwordRec->getPosition().x,otherSwordRec->getPosition().y, otherSwordRec->getSize().x,otherSwordRec->getSize().y);
+				GameObject *otherPlayerRec = this->getPlayer(otherSwordNum);
+
+				IntRect *otherSwordRect = new IntRect(otherSword->get(ATTR_POSITION,"x").toInt(),otherSword->get(ATTR_POSITION,"y").toInt(),
+					otherSword->get(ATTR_RECTANGLE,"width").toInt(),otherSword->get(ATTR_RECTANGLE,"height").toInt());
+				IntRect *otherPlayerRect = new IntRect(otherPlayerRec->get(ATTR_POSITION,"x").toInt(),otherPlayerRec->get(ATTR_POSITION,"y").toInt(),
+					otherPlayerRec->get(ATTR_RECTANGLE,"width").toInt(),otherPlayerRec->get(ATTR_RECTANGLE,"height").toInt());
+
 				if(r->intersects(*otherPlayerRect)){
 					//code for 3
 					//if other guy has up then GG for him
 					if(otherSword->get(ATTR_SWORDSTATE,"up").toBool()){
 						if(!o->get(ATTR_SWORDSTATE,"up").toBool()){
-							referee->set(ATTR_ROUNDSTATE,"winner",swordNum,this);
-							referee->set(ATTR_ROUNDSTATE,"roundEnd",true,this);
-							cout<<"player "<<swordNum<<" wins!\n";
+							if(o->get(ATTR_VELOCITY,"xVelocity").toInt() == 0){
+								referee->set(ATTR_ROUNDSTATE,"winner",swordNum,this);
+								referee->set(ATTR_ROUNDSTATE,"roundEnd",true,this);
+								cout<<"player "<<swordNum<<" wins!\n";
+							}else{
+								referee->set(ATTR_ROUNDSTATE,"winner",DKO,this);
+								referee->set(ATTR_ROUNDSTATE,"roundEnd",true,this);
+								cout<<"player "<<DKO<<" wins!\n"; //player 3 = Double KO
+							}
 						}else{
 							//both players have "UP" swords, so gotta bounce them back a lil
-
 						}
 
 						//if other guy has down 
 					}else if(otherSword->get(ATTR_SWORDSTATE,"down").toBool()){
-						if(!o->get(ATTR_SWORDSTATE,"down").toBool()&&!o->get(ATTR_SWORDSTATE,"up").toBool()){
-							referee->set(ATTR_ROUNDSTATE,"winner",swordNum,this);
-							referee->set(ATTR_ROUNDSTATE,"roundEnd",true,this);
-							cout<<"player "<<swordNum<<" wins!\n";
-						}else if(o->get(ATTR_SWORDSTATE,"up").toBool()){
-							referee->set(ATTR_ROUNDSTATE,"winner",otherSwordNum,this);
-							referee->set(ATTR_ROUNDSTATE,"roundEnd",true,this);
-							cout<<"player "<<otherSwordNum<<" wins!\n";
+						if(!o->get(ATTR_SWORDSTATE,"down").toBool()){
+							if(o->get(ATTR_VELOCITY,"xVelocity").toInt() == 0){
+								referee->set(ATTR_ROUNDSTATE,"winner",swordNum,this);
+								referee->set(ATTR_ROUNDSTATE,"roundEnd",true,this);
+								cout<<"player "<<swordNum<<" wins!\n";
+							}else{
+								referee->set(ATTR_ROUNDSTATE,"winner",DKO,this);
+								referee->set(ATTR_ROUNDSTATE,"roundEnd",true,this);
+								cout<<"player "<<DKO<<" wins!\n"; //player 3 = Double KO
+							}
 						}else{
 							//gotta bounce them back a lil
 						}
@@ -174,7 +208,7 @@ void CollisionSystem::update()
 
 			}
 		}
-	}
+	
 
 }
 GameObject* CollisionSystem::getReferee()
