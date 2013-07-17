@@ -43,6 +43,7 @@ void LoadingSystem::update()
 																sf::Keyboard::A,
 																sf::Keyboard::D,
 																sf::Keyboard::LShift,
+																sf::Keyboard::LControl,
 																this);
 				_repo->newSwordObject(620, 440, 50, 9, 2, this);
 				_repo->newPlayerObject(670, 400, 30, 100, 2, sf::Keyboard::Up,
@@ -50,6 +51,7 @@ void LoadingSystem::update()
 																sf::Keyboard::Left,
 																sf::Keyboard::Right,
 																sf::Keyboard::RShift,
+																sf::Keyboard::RControl,
 																this);
 				_repo->newRefereeObject(this);
 				_repo->newGameStateObject(true, false, this);

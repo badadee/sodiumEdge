@@ -18,6 +18,7 @@ GameObject* GameObjectFactory::newSwordObject(int x, int y, int width, int heigh
 	obj->set(ATTR_VELOCITY, "xVelocity", 0, system);
 	obj->set(ATTR_VELOCITY, "yVelocity", 0, system);
 	obj->set(ATTR_SWORDSTATE, "heldBy", playerNum, system);
+	obj->set(ATTR_SWORDSTATE, "thrustFrame", 0, system);
 	obj->set(ATTR_SWORDSTATE, "up", false, system);
 	obj->set(ATTR_SWORDSTATE, "down", false, system);
 	obj->set(ATTR_SWORDSTATE, "held", true, system);
@@ -36,6 +37,7 @@ GameObject* GameObjectFactory::newPlayerObject(int x, int y, int width, int heig
 																								   sf::Keyboard::Key left,
 																								   sf::Keyboard::Key right,
 																								   sf::Keyboard::Key jump,
+																								   sf::Keyboard::Key thrust,
 																								   System *system)
 {
     GameObject *obj = new GameObject();
@@ -65,6 +67,7 @@ GameObject* GameObjectFactory::newPlayerObject(int x, int y, int width, int heig
 	obj->set(ATTR_KEYMAP, "left", left, system);
 	obj->set(ATTR_KEYMAP, "right", right, system);
 	obj->set(ATTR_KEYMAP, "jump", jump, system);
+	obj->set(ATTR_KEYMAP, "thrust", thrust, system);
 
 	sf::RectangleShape *sprite = new sf::RectangleShape(sf::Vector2f((float)width, (float)height));
 	sprite->setFillColor(sf::Color::Green);

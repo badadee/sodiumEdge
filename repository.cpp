@@ -20,12 +20,14 @@ GameObject* Repository::newPlayerObject(int x, int y, int width, int height, int
 																							sf::Keyboard::Key left,
 																							sf::Keyboard::Key right,
 																							sf::Keyboard::Key jump,
+																							sf::Keyboard::Key thrust,
 																							System *system) {
 	GameObject *newObject = GameObjectFactory::newPlayerObject(x,y,width,height,playerNum,up,
 																						  down,
 																						  left,
 																						  right,
 																						  jump,
+																						  thrust,
 																						  system);
     _gameObjectManager->push_back(newObject);
     _groupManager->updateRegistry(newObject);

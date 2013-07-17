@@ -38,6 +38,7 @@ Attribute* AttributeFactory::create(AttributeType type)
 
 		case ATTR_SWORDSTATE:
 			(*newAttribute)["heldBy"] = 0;			//1 for player1, 2 for player2
+			(*newAttribute)["thrustFrame"] = 0;		//int frames left until thrust completes
 			(*newAttribute)["up"] = 0;				//bool true for sword held up
 			(*newAttribute)["down"] = 0;			//bool true for sword held down
 			break;
@@ -63,6 +64,7 @@ Attribute* AttributeFactory::create(AttributeType type)
 			(*newAttribute)["left"] = 0;
 			(*newAttribute)["right"] = 0;
 			(*newAttribute)["jump"] = 0;
+			(*newAttribute)["thrust"] = 0;
 			break;
 
 		case ATTR_TEXT:

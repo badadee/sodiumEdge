@@ -18,11 +18,13 @@ void InputSystem::update()
 		GameObject *swordObject = this->getSword(playerNum);
 		bool up = swordObject->get(ATTR_SWORDSTATE, "up").toBool();
 		bool down = swordObject->get(ATTR_SWORDSTATE, "down").toBool();
+		int thrustFrame = swordObject->get(ATTR_SWORDSTATE, "thrustFrame").toInt();
 		sf::Keyboard::Key upKey = playerObject->get(ATTR_KEYMAP, "up").toKey();
 		sf::Keyboard::Key downKey = playerObject->get(ATTR_KEYMAP, "down").toKey();
 		sf::Keyboard::Key leftKey = playerObject->get(ATTR_KEYMAP, "left").toKey();
 		sf::Keyboard::Key rightKey = playerObject->get(ATTR_KEYMAP, "right").toKey();
 		sf::Keyboard::Key jumpKey = playerObject->get(ATTR_KEYMAP, "jump").toKey();
+		sf::Keyboard::Key thrustKey = playerObject->get(ATTR_KEYMAP, "thrust").toKey();
 				
 		playerObject->set(ATTR_VELOCITY, "xVelocity", 0, this);
 		swordObject->set(ATTR_VELOCITY, "xVelocity", 0, this);
@@ -40,6 +42,10 @@ void InputSystem::update()
 				playerObject->set(ATTR_PLAYERSTATE, "jumping", true, this);
 				playerObject->set(ATTR_VELOCITY, "yVelocity", -20, this);
 			}
+		}
+
+		if (sf::Keyboard::isKeyPressed(thrustKey) && thrustFrame <= 0) {
+			swordObject->set(ATTR_SWORDSTATE, "thrustFrame", 40, this);
 		}
 
 		if (sf::Keyboard::isKeyPressed(upKey) && !sf::Keyboard::isKeyPressed(downKey) && !up) {
