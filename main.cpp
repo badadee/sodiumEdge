@@ -28,7 +28,6 @@ int main()
 			System *s = *i;
 			s->update();
 		}
-
         window->display();
     }
 

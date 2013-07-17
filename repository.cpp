@@ -40,7 +40,7 @@ GameObject* Repository::newPlatformObject(int x, int y, int width, int height, S
     return newObject;
 }
 
-GameObject* Repository::newRefereeObject( System *system)
+GameObject* Repository::newRefereeObject(System *system)
 {
     GameObject *newObject = GameObjectFactory::newRefereeObject(system);
     _gameObjectManager->push_back(newObject);
@@ -48,9 +48,17 @@ GameObject* Repository::newRefereeObject( System *system)
     return newObject;
 }
 
-GameObject* Repository::newGameStateObject( System *system)
+GameObject* Repository::newGameStateObject(System *system)
 {
     GameObject *newObject = GameObjectFactory::newGameStateObject(system);
+    _gameObjectManager->push_back(newObject);
+    _groupManager->updateRegistry(newObject);
+    return newObject;
+}
+
+GameObject* Repository::newMenuObject(int x, int y, int size, bool selectable, bool selected, sf::Font *font, std::string text, System *system)
+{
+    GameObject *newObject = GameObjectFactory::newMenuObject(x, y, size, selectable, selected, font, text, system);
     _gameObjectManager->push_back(newObject);
     _groupManager->updateRegistry(newObject);
     return newObject;
@@ -138,5 +146,17 @@ ObjectList::iterator Repository::endGroup(GroupType groupType)
 {
     Group* group = (*_groupManager)[groupType];
     return group->end();
+}
+
+ObjectList::reverse_iterator Repository::rbeginGroup(GroupType groupType)
+{
+    Group* group = (*_groupManager)[groupType];
+    return group->rbegin();
+}
+
+ObjectList::reverse_iterator Repository::rendGroup(GroupType groupType)
+{
+    Group* group = (*_groupManager)[groupType];
+    return group->rend();
 }
 
