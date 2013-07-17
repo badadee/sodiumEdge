@@ -56,9 +56,9 @@ GameObject* Repository::newGameStateObject(System *system)
     return newObject;
 }
 
-GameObject* Repository::newMenuObject(int x, int y, int size, sf::Font *font, std::string text, System *system)
+GameObject* Repository::newMenuObject(int x, int y, int size, bool selectable, bool selected, sf::Font *font, std::string text, System *system)
 {
-    GameObject *newObject = GameObjectFactory::newMenuObject(x, y, size, font, text, system);
+    GameObject *newObject = GameObjectFactory::newMenuObject(x, y, size, selectable, selected, font, text, system);
     _gameObjectManager->push_back(newObject);
     _groupManager->updateRegistry(newObject);
     return newObject;
@@ -146,5 +146,17 @@ ObjectList::iterator Repository::endGroup(GroupType groupType)
 {
     Group* group = (*_groupManager)[groupType];
     return group->end();
+}
+
+ObjectList::reverse_iterator Repository::rbeginGroup(GroupType groupType)
+{
+    Group* group = (*_groupManager)[groupType];
+    return group->rbegin();
+}
+
+ObjectList::reverse_iterator Repository::rendGroup(GroupType groupType)
+{
+    Group* group = (*_groupManager)[groupType];
+    return group->rend();
 }
 

@@ -128,7 +128,7 @@ GameObject* GameObjectFactory::newGameStateObject(System *system)
     return obj;
 }
 
-GameObject* GameObjectFactory::newMenuObject(int x, int y, int size, sf::Font *font, std::string text, System *system)
+GameObject* GameObjectFactory::newMenuObject(int x, int y, int size, bool selectable, bool selected, sf::Font *font, std::string text, System *system)
 {
 	GameObject *obj = new GameObject();
 	obj->insert(ATTR_TEXT);
@@ -138,9 +138,14 @@ GameObject* GameObjectFactory::newMenuObject(int x, int y, int size, sf::Font *f
 	t->setFont(*font);
 	t->setString(text);
 	t->setCharacterSize(size);
-	t->setColor(sf::Color::White);
 	t->setStyle(sf::Text::Regular);
-	t->setPosition(x, y);
+	t->setPosition((float)x,(float) y);
+	t->setColor(sf::Color::White);
+
+	if (selectable) {
+		obj->insert(ATTR_SELECTION);
+		obj->set(ATTR_SELECTION, "selected", selected, system);
+	}
 	
 	obj->set(ATTR_TEXT, "text", t, system);
 

@@ -73,3 +73,13 @@ std::vector<GameObject*>::iterator Group::end()
 {
     return _objects->end();
 }
+
+std::vector<GameObject*>::reverse_iterator Group::rbegin()
+{
+	return _objects->rbegin();
+}
+
+std::vector<GameObject*>::reverse_iterator Group::rend()
+{
+	return _objects->rend();
+}

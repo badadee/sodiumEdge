@@ -25,9 +25,10 @@ void LoadingSystem::update()
 		if (o->get(ATTR_GAMESTATE, "load").toBool()) {
 			switch (o->get(ATTR_GAMESTATE, "inGame").toBool()) {
 				case false:
-					_repo->newMenuObject(230, 20, 100, _font, "SODIUM", this);
-					_repo->newMenuObject(250, 90, 100, _font, "EDGE", this);
-					_repo->newMenuObject(300, 300, 30, _font, "START GAME", this);
+					_repo->newMenuObject(230, 20, 100, false, false, _font, "SODIUM", this);
+					_repo->newMenuObject(250, 90, 100, false, false, _font, "EDGE", this);
+					_repo->newMenuObject(300, 300, 30, true, true, _font, "START GAME", this);
+					_repo->newMenuObject(300, 330, 30, true, false, _font, "CLEAR WINS", this);
 					
 					o->set(ATTR_GAMESTATE, "load", false, this);
 					break;

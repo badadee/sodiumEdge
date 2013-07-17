@@ -20,6 +20,8 @@ public:
     std::vector<AttributeType> requiredAttributes();
     std::vector<GameObject*>::iterator begin();
     std::vector<GameObject*>::iterator end();
+	std::vector<GameObject*>::reverse_iterator rbegin();
+	std::vector<GameObject*>::reverse_iterator rend();
     ~Group();
 private:
     bool canRegister(GameObject *object);

@@ -68,6 +68,10 @@ Attribute* AttributeFactory::create(AttributeType type)
 		case ATTR_TEXT:
 			(*newAttribute)["text"] = 0;			//sf::Text object for displaying menu and score
 			break;
+
+		case ATTR_SELECTION:
+			(*newAttribute)["selected"] = 0;
+			break;
         // invalid AttributeType
         default:
             delete newAttribute;
