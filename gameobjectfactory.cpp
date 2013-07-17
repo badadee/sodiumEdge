@@ -107,3 +107,14 @@ GameObject* GameObjectFactory::newRefereeObject(System *system)
 
     return obj;
 }
+
+GameObject* GameObjectFactory::newGameStateObject(System *system)
+{
+    GameObject *obj = new GameObject();
+	obj->insert(ATTR_GAMESTATE);
+
+    obj->set(ATTR_GAMESTATE, "inGame", true, system);
+	obj->set(ATTR_GAMESTATE, "load", true, system);
+
+    return obj;
+}

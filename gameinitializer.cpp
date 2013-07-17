@@ -1,4 +1,5 @@
 #include "gameinitializer.h"
+#include "loadingsystem.h"
 #include "inputsystem.h"
 #include "rendersystem.h"
 #include "physicssystem.h"
@@ -22,6 +23,9 @@ std::list<System*> GameInitializer::initializeGameSystems(sf::RenderWindow *wind
 {
 	std::list<System*> systemList;
 
+	LoadingSystem *loadingSystem = new LoadingSystem(repo);
+	systemList.push_back(loadingSystem);
+
 	InputSystem *inputSystem = new InputSystem(repo);
 	systemList.push_back(inputSystem);
 
@@ -34,12 +38,17 @@ std::list<System*> GameInitializer::initializeGameSystems(sf::RenderWindow *wind
 	CollisionSystem *collisionSystem = new CollisionSystem(repo);
 	systemList.push_back(collisionSystem);
 
+	//Group creation
+	repo->newGroup(GRP_GAMESTATE, ATTR_GAMESTATE);
 	repo->newGroup(GRP_PLAYERS, ATTR_POSITION, ATTR_VELOCITY, ATTR_PLAYERSTATE);
 	repo->newGroup(GRP_SWORDS, ATTR_POSITION, ATTR_VELOCITY, ATTR_SWORDSTATE);
 	repo->newGroup(GRP_PHYSICS, ATTR_POSITION, ATTR_VELOCITY, ATTR_GRAVITY);
 	repo->newGroup(GRP_RENDER, ATTR_SPRITE, ATTR_POSITION, ATTR_RECTANGLE);
 	repo->newGroup(GRP_PLATFORM, ATTR_POSITION,ATTR_RECTANGLE,ATTR_STATIC);
-	repo->newGroup(GRP_GAMEUTIL, ATTR_POSITION,ATTR_GAMESTATE);
+	repo->newGroup(GRP_GAMEUTIL, ATTR_POSITION,ATTR_ROUNDSTATE);
+
+	//Initial Game State Object for the Loading System
+	repo->newGameStateObject(loadingSystem);
 
 	return systemList;
 }

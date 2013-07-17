@@ -37,6 +37,14 @@ GameObject* Repository::newRefereeObject( System *system)
     return newObject;
 }
 
+GameObject* Repository::newGameStateObject( System *system)
+{
+    GameObject *newObject = GameObjectFactory::newGameStateObject(system);
+    _gameObjectManager->push_back(newObject);
+    _groupManager->updateRegistry(newObject);
+    return newObject;
+}
+
 GameObject* Repository::attach(GameObject *object, AttributeType attributeType)
 {
     object->insert(attributeType);

@@ -23,8 +23,8 @@ Attribute* AttributeFactory::create(AttributeType type)
 
 		case ATTR_PLAYERSTATE:
 			(*newAttribute)["playerNum"] = 0;		//1 for player1, 2 for player2
-			(*newAttribute)["jumping"] = 0;			//bool true for jumping in the air
-			(*newAttribute)["onPlatform"] = 0;	
+			(*newAttribute)["jumping"] = 0;			//bool true for jumping in the air, default false for on the ground
+			(*newAttribute)["onPlatform"] = 0;
 			(*newAttribute)["facing"] = 0;	
 			break;
 
@@ -50,6 +50,11 @@ Attribute* AttributeFactory::create(AttributeType type)
 			(*newAttribute)["roundEnd"] = 0;
 			(*newAttribute)["winner"] = 0;
 			(*newAttribute)["paused"] = 0;
+			break;
+
+		case ATTR_GAMESTATE:
+			(*newAttribute)["inGame"] = 0;			//bool true for in game, default false for in menu
+			(*newAttribute)["load"] = 0;			//bool true for loading needed on current frame, default false for no load required
 			break;
         // invalid AttributeType
         default:

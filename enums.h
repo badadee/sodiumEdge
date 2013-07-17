@@ -31,6 +31,7 @@ enum WinnerType {
 	PLAYER2
 };
 enum GroupType {
+	GRP_GAMESTATE,
 	GRP_PLAYERS,
 	GRP_SWORDS,
 	GRP_PHYSICS,

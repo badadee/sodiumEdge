@@ -12,13 +12,6 @@ int main()
 	std::list<System*> systemList = GameInitializer::initializeGameSystems(window, repo);
 	std::list<System*>::iterator i;
 
-	repo->newPlatformObject(100, 500, 600, 100, *systemList.begin());
-    repo->newSwordObject(130, 440, 50, 9, 1, *systemList.begin());
-    repo->newPlayerObject(100, 400, 30, 100, 1, *systemList.begin());
-    repo->newSwordObject(620, 440, 50, 9, 2, *systemList.begin());
-    repo->newPlayerObject(670, 400, 30, 100, 2, *systemList.begin());
-    repo->newRefereeObject(*systemList.begin());
-
     while (window->isOpen())
     {
         sf::Event event;
