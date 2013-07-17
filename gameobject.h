@@ -27,6 +27,8 @@ public:
     void set(AttributeType attributeType, std::string valueName, const char *value, System *system);
 	void set(AttributeType attributeType, std::string valueName, bool value, System *system);
 	void set(AttributeType attributeType, std::string valueName, sf::RectangleShape *value, System *system);
+	void set(AttributeType attributeType, std::string valueName, sf::Text *value, System *system);
+	void set(AttributeType attributeType, std::string valueName, sf::Keyboard::Key value, System *system);
     bool contains(AttributeType attributeType);
     Variant get(AttributeType attributeType, std::string valueName);
     ~GameObject();

@@ -8,14 +8,25 @@ Repository::Repository()
 }
 
 GameObject* Repository::newSwordObject(int x, int y, int width, int height, int playerNum, System *system)
-{    GameObject *newObject = GameObjectFactory::newSwordObject(x,y,width,height,playerNum,system);
+{
+	GameObject *newObject = GameObjectFactory::newSwordObject(x,y,width,height,playerNum,system);
     _gameObjectManager->push_back(newObject);
     _groupManager->updateRegistry(newObject);
     return newObject;
 }
 
-GameObject* Repository::newPlayerObject(int x, int y, int width, int height, int playerNum, System *system)
-{    GameObject *newObject = GameObjectFactory::newPlayerObject(x,y,width,height,playerNum,system);
+GameObject* Repository::newPlayerObject(int x, int y, int width, int height, int playerNum, sf::Keyboard::Key up,
+																							sf::Keyboard::Key down,
+																							sf::Keyboard::Key left,
+																							sf::Keyboard::Key right,
+																							sf::Keyboard::Key jump,
+																							System *system) {
+	GameObject *newObject = GameObjectFactory::newPlayerObject(x,y,width,height,playerNum,up,
+																						  down,
+																						  left,
+																						  right,
+																						  jump,
+																						  system);
     _gameObjectManager->push_back(newObject);
     _groupManager->updateRegistry(newObject);
     return newObject;

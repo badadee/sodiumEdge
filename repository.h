@@ -22,7 +22,12 @@ class Repository
 public:
     Repository();
 	GameObject* newSwordObject(int x, int y, int width, int height, int playerNum, System *system);
-	GameObject* newPlayerObject(int x, int y, int width, int height, int playerNum, System *system);
+	GameObject* newPlayerObject(int x, int y, int width, int height, int playerNum, sf::Keyboard::Key up,
+																				    sf::Keyboard::Key down,
+																				    sf::Keyboard::Key left,
+																				    sf::Keyboard::Key right,
+																				    sf::Keyboard::Key jump,
+																					System *system);
 	GameObject* newPlatformObject(int x, int y, int width, int height, System *system);
 	GameObject* newRefereeObject(System *system);
 	GameObject* newGameStateObject(System *system);

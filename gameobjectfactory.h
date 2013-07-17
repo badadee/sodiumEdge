@@ -17,7 +17,12 @@ class GameObjectFactory
 {
 public:
 	static GameObject* newSwordObject(int x, int y, int width, int height, int playerNum, System *system);
-	static GameObject* newPlayerObject(int x, int y, int width, int height, int playerNum, System *system);
+	static GameObject* newPlayerObject(int x, int y, int width, int height, int playerNum, sf::Keyboard::Key up,
+																						   sf::Keyboard::Key down,
+																						   sf::Keyboard::Key left,
+																						   sf::Keyboard::Key right,
+																						   sf::Keyboard::Key jump,
+																						   System *system);
 	static GameObject* newPlatformObject(int x, int y, int width, int height,  System *system);
 	static GameObject* newRefereeObject(System *system);
 	static GameObject* newGameStateObject(System *system);

@@ -10,6 +10,7 @@ Variant::Variant(const char* val)			{ _type = "string"; _str = val; }
 Variant::Variant(bool val)					{ _type = "bool"; _bool = val; }
 Variant::Variant(sf::RectangleShape *val)	{ _type = "sprite"; _sprite = val; }
 Variant::Variant(sf::Text *val)				{ _type = "text"; _text = val; }
+Variant::Variant(sf::Keyboard::Key val)		{ _type = "key"; _key = val; }
 
 /******************************************************************** GETTERS */
 
@@ -19,3 +20,4 @@ double Variant::toDouble()					{ return _double; }
 bool Variant::toBool()						{ return _bool; }
 sf::RectangleShape* Variant::toSprite()		{ return _sprite; }
 sf::Text* Variant::toText()					{ return _text; }
+sf::Keyboard::Key Variant::toKey()			{ return _key; }

@@ -105,6 +105,22 @@ void GameObject::set(AttributeType attributeType, std::string valueName, sf::Rec
     }
 }
 
+// set an attribute value to a text
+void GameObject::set(AttributeType attributeType, std::string valueName, sf::Text *value, System *system)
+{
+    if (Permissions::isAllowed(attributeType, system)) {
+        (*(*_attributes)[attributeType])[valueName] = value;
+    }
+}
+
+// set an attribute value to a Key
+void GameObject::set(AttributeType attributeType, std::string valueName, sf::Keyboard::Key value, System *system)
+{
+    if (Permissions::isAllowed(attributeType, system)) {
+        (*(*_attributes)[attributeType])[valueName] = value;
+    }
+}
+
 /*********************************************************************** MISC */
 
 // whether or not the attribute is contained within the game object

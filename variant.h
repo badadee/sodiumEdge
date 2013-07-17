@@ -21,12 +21,14 @@ public:
 	Variant(bool val);
 	Variant(sf::RectangleShape *val);
 	Variant(sf::Text *val);
+	Variant(sf::Keyboard::Key);
     std::string toString();
     int toInt();
     double toDouble();
 	bool toBool();
 	sf::RectangleShape* toSprite();
 	sf::Text* toText();
+	sf::Keyboard::Key toKey();
 
 private:
     std::string _type;
@@ -36,6 +38,7 @@ private:
 	bool _bool;
 	sf::RectangleShape *_sprite;
 	sf::Text *_text;
+	sf::Keyboard::Key _key;
 };
 
 #endif // VARIANT_H

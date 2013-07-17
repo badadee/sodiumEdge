@@ -56,6 +56,14 @@ Attribute* AttributeFactory::create(AttributeType type)
 			(*newAttribute)["inGame"] = 0;			//bool true for in game, default false for in menu
 			(*newAttribute)["load"] = 0;			//bool true for loading needed on current frame, default false for no load required
 			break;
+
+		case ATTR_KEYMAP:
+			(*newAttribute)["up"] = 0;				//sf::Keyboard::Key enum for mapping key to player attribute
+			(*newAttribute)["down"] = 0;
+			(*newAttribute)["left"] = 0;
+			(*newAttribute)["right"] = 0;
+			(*newAttribute)["jump"] = 0;
+			break;
         // invalid AttributeType
         default:
             delete newAttribute;
