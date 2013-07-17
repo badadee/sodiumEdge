@@ -80,6 +80,10 @@ Attribute* AttributeFactory::create(AttributeType type)
 			(*newAttribute)["startGame"] = 0;		//bool true for initiating game start from menu, default false
 			(*newAttribute)["clearWins"] = 0;		//bool true for clearing player 1 and 2 wins from menu, default false
 			break;
+
+		case ATTR_MENUSCORE:
+			(*newAttribute)["score"] = 0;
+			break;
         // invalid AttributeType
         default:
             delete newAttribute;

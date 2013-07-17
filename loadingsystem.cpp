@@ -1,6 +1,7 @@
 #include <iostream>
 #include <signal.h>
 #include "loadingsystem.h"
+#include "statisticsio.h"
 
 LoadingSystem::LoadingSystem(Repository *repo)
 {
@@ -20,15 +21,20 @@ void LoadingSystem::update()
 {
 	ObjectList::iterator i = _repo->beginGroup(GRP_GAMESTATE);
 	GameObject *o = *i;
+	StatisticsIO *file = new StatisticsIO("scores.txt");
 
 	if (o->get(ATTR_GAMESTATE, "load").toBool()) {
 		switch (o->get(ATTR_GAMESTATE, "inGame").toBool()) {
 			case false:
 				_repo->clean();
-				_repo->newMenuObject(230, 20, 100, 0, false, false, _font, "SODIUM", this);
-				_repo->newMenuObject(250, 90, 100, 0, false, false, _font, "EDGE", this);
-				_repo->newMenuObject(300, 300, 30, 1, true, true, _font, "START GAME", this);
-				_repo->newMenuObject(300, 330, 30, 2, true, false, _font, "CLEAR WINS", this);
+				_repo->newMenuObject(230, 20, 100, 0, false, false, false, _font, "SODIUM", this);
+				_repo->newMenuObject(250, 90, 100, 0, false, false, false, _font, "EDGE", this);
+				_repo->newMenuObject(50, 500, 50, 0, false, false, false, _font, "Player1: ", this);
+				_repo->newMenuObject(450, 500, 50, 0, false, false, false, _font, "Player2: ", this);
+				_repo->newMenuObject(270, 500, 50, 0, false, false, true, _font, std::to_string(file->getPlayerOneScore()), this);
+				_repo->newMenuObject(685, 500, 50, 0, false, false, true, _font, std::to_string(file->getPlayerTwoScore()), this);
+				_repo->newMenuObject(300, 300, 30, 1, true, true, false, _font, "START GAME", this);
+				_repo->newMenuObject(300, 330, 30, 2, true, false, false, _font, "CLEAR WINS", this);
 				_repo->newMenuActionObject(this);
 				_repo->newGameStateObject(false, false, this);
 

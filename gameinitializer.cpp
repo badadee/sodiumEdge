@@ -48,6 +48,7 @@ std::list<System*> GameInitializer::initializeGameSystems(sf::RenderWindow *wind
 	repo->newGroup(GRP_SWORDS, ATTR_POSITION, ATTR_VELOCITY, ATTR_SWORDSTATE);
 	repo->newGroup(GRP_MENU, ATTR_TEXT, ATTR_SELECTION);
 	repo->newGroup(GRP_MENUACTION, ATTR_MENUACTION);
+	repo->newGroup(GRP_MENUSCORE, ATTR_MENUSCORE, ATTR_TEXT);
 	repo->newGroup(GRP_PHYSICS, ATTR_POSITION, ATTR_VELOCITY, ATTR_GRAVITY);
 	repo->newGroup(GRP_RENDERSPRITE, ATTR_SPRITE, ATTR_POSITION, ATTR_RECTANGLE);
 	repo->newGroup(GRP_RENDERTEXT, ATTR_TEXT);

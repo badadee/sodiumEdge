@@ -27,7 +27,7 @@ public:
 	static GameObject* newPlatformObject(int x, int y, int width, int height,  System *system);
 	static GameObject* newRefereeObject(System *system);
 	static GameObject* newGameStateObject(bool inGame, bool load, System *system);
-	static GameObject* newMenuObject(int x, int y, int size, int menuNum, bool selectable, bool selected, sf::Font *font, std::string text, System *system);
+	static GameObject* newMenuObject(int x, int y, int size, int menuNum, bool selectable, bool selected, bool score, sf::Font *font, std::string text, System *system);
 	static GameObject* newMenuActionObject(System *system);
 };
 

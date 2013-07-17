@@ -127,6 +127,14 @@ void InputSystem::update()
 						menuAction->set(ATTR_MENUACTION, "startGame", true, this);
 					}
 				}
+
+				//Clear Wins Selected
+				if (o->get(ATTR_SELECTION, "menuNum").toInt() == 2) {
+					for (k = _repo->beginGroup(GRP_MENUACTION); k != _repo->endGroup(GRP_MENUACTION); ++k) {
+						GameObject *menuAction = *k;
+						menuAction->set(ATTR_MENUACTION, "clearWins", true, this);
+					}
+				}
 			}
 		}
 	}

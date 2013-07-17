@@ -1,5 +1,6 @@
 #include <iostream>
 #include "menuactionsystem.h"
+#include "statisticsio.h"
 
 MenuActionSystem::MenuActionSystem(Repository *repo)
 {
@@ -24,6 +25,17 @@ void MenuActionSystem::update()
 				gameState->set(ATTR_GAMESTATE, "inGame", true, this);
 				gameState->set(ATTR_GAMESTATE, "load", true, this);
 			}				
+		}
+
+		if (clearWins) {
+			for (j = _repo->beginGroup(GRP_MENUSCORE); j != _repo->endGroup(GRP_MENUSCORE); ++j) {
+				GameObject *menuScore = *j;
+				StatisticsIO *file = new StatisticsIO("scores.txt");
+				file->setPlayerOneScore(0);
+				file->setPlayerTwoScore(0);
+
+				menuScore->set(ATTR_MENUSCORE, "score", 0, this);
+			}			
 		}
     }
 }

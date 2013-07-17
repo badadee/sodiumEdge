@@ -58,9 +58,9 @@ GameObject* Repository::newGameStateObject(bool inGame, bool load, System *syste
     return newObject;
 }
 
-GameObject* Repository::newMenuObject(int x, int y, int size, int menuNum, bool selectable, bool selected, sf::Font *font, std::string text, System *system)
+GameObject* Repository::newMenuObject(int x, int y, int size, int menuNum, bool selectable, bool selected, bool score, sf::Font *font, std::string text, System *system)
 {
-    GameObject *newObject = GameObjectFactory::newMenuObject(x, y, size, menuNum, selectable, selected, font, text, system);
+    GameObject *newObject = GameObjectFactory::newMenuObject(x, y, size, menuNum, selectable, selected, score, font, text, system);
     _gameObjectManager->push_back(newObject);
     _groupManager->updateRegistry(newObject);
     return newObject;

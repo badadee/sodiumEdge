@@ -32,7 +32,7 @@ public:
 	GameObject* newPlatformObject(int x, int y, int width, int height, System *system);
 	GameObject* newRefereeObject(System *system);
 	GameObject* newGameStateObject(bool inGame, bool load, System *system);
-	GameObject* newMenuObject(int x, int y, int size, int menuNum, bool selectable, bool selected, sf::Font *font, std::string text, System *system);
+	GameObject* newMenuObject(int x, int y, int size, int menuNum, bool selectable, bool selected, bool score, sf::Font *font, std::string text, System *system);
 	GameObject* newMenuActionObject(System *system);
     GameObject* attach(GameObject* object, AttributeType attributeType);
     GameObject* detach(GameObject* object, AttributeType attributeType);

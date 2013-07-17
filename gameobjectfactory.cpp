@@ -131,7 +131,7 @@ GameObject* GameObjectFactory::newGameStateObject(bool inGame, bool load, System
     return obj;
 }
 
-GameObject* GameObjectFactory::newMenuObject(int x, int y, int size, int menuNum, bool selectable, bool selected, sf::Font *font, std::string text, System *system)
+GameObject* GameObjectFactory::newMenuObject(int x, int y, int size, int menuNum, bool selectable, bool selected, bool score, sf::Font *font, std::string text, System *system)
 {
 	GameObject *obj = new GameObject();
 	obj->insert(ATTR_TEXT);
@@ -149,6 +149,11 @@ GameObject* GameObjectFactory::newMenuObject(int x, int y, int size, int menuNum
 		obj->insert(ATTR_SELECTION);
 		obj->set(ATTR_SELECTION, "selected", selected, system);
 		obj->set(ATTR_SELECTION, "menuNum", menuNum, system);
+	}
+
+	if (score) {
+		obj->insert(ATTR_MENUSCORE);
+		obj->set(ATTR_MENUSCORE, "score", atoi(text.c_str()), system);
 	}
 	
 	obj->set(ATTR_TEXT, "text", t, system);
