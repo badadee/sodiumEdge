@@ -70,7 +70,13 @@ Attribute* AttributeFactory::create(AttributeType type)
 			break;
 
 		case ATTR_SELECTION:
-			(*newAttribute)["selected"] = 0;
+			(*newAttribute)["selected"] = 0;		//bool true for selected menu object, default false except for first menu object
+			(*newAttribute)["menuNum"] = 0;			//int menu number
+			break;
+
+		case ATTR_MENUACTION:
+			(*newAttribute)["startGame"] = 0;		//bool true for initiating game start from menu, default false
+			(*newAttribute)["clearWins"] = 0;		//bool true for clearing player 1 and 2 wins from menu, default false
 			break;
         // invalid AttributeType
         default:

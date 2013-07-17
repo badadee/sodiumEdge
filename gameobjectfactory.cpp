@@ -117,18 +117,18 @@ GameObject* GameObjectFactory::newRefereeObject(System *system)
     return obj;
 }
 
-GameObject* GameObjectFactory::newGameStateObject(System *system)
+GameObject* GameObjectFactory::newGameStateObject(bool inGame, bool load, System *system)
 {
     GameObject *obj = new GameObject();
 	obj->insert(ATTR_GAMESTATE);
 
-    obj->set(ATTR_GAMESTATE, "inGame", false, system);
-	obj->set(ATTR_GAMESTATE, "load", true, system);
+    obj->set(ATTR_GAMESTATE, "inGame", inGame, system);
+	obj->set(ATTR_GAMESTATE, "load", load, system);
 
     return obj;
 }
 
-GameObject* GameObjectFactory::newMenuObject(int x, int y, int size, bool selectable, bool selected, sf::Font *font, std::string text, System *system)
+GameObject* GameObjectFactory::newMenuObject(int x, int y, int size, int menuNum, bool selectable, bool selected, sf::Font *font, std::string text, System *system)
 {
 	GameObject *obj = new GameObject();
 	obj->insert(ATTR_TEXT);
@@ -145,9 +145,21 @@ GameObject* GameObjectFactory::newMenuObject(int x, int y, int size, bool select
 	if (selectable) {
 		obj->insert(ATTR_SELECTION);
 		obj->set(ATTR_SELECTION, "selected", selected, system);
+		obj->set(ATTR_SELECTION, "menuNum", menuNum, system);
 	}
 	
 	obj->set(ATTR_TEXT, "text", t, system);
+
+	return obj;
+}
+
+GameObject* GameObjectFactory::newMenuActionObject(System *system)
+{
+	GameObject *obj = new GameObject();
+	obj->insert(ATTR_MENUACTION);
+
+	obj->set(ATTR_MENUACTION, "startGame", false, system);
+	obj->set(ATTR_MENUACTION, "clearWins", false, system);
 
 	return obj;
 }

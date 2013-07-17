@@ -8,6 +8,9 @@ InputSystem::InputSystem(Repository * repo)
 void InputSystem::update()
 {
 	ObjectList::iterator i;
+	ObjectList::reverse_iterator j;
+	ObjectList::iterator k;
+	
     for (i = _repo->beginGroup(GRP_PLAYERS); i != _repo->endGroup(GRP_PLAYERS); ++i) {
         GameObject *playerObject = *i;
 		
@@ -63,7 +66,7 @@ void InputSystem::update()
     }
 
 	//Menu Selection Inputs
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)))
 	{
 		i = _repo->beginGroup(GRP_MENU);
 		GameObject *previous;
@@ -84,10 +87,8 @@ void InputSystem::update()
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 	{
-		ObjectList::reverse_iterator j;
-
 		j = _repo->rbeginGroup(GRP_MENU);
 		GameObject *previous;
 
@@ -105,8 +106,23 @@ void InputSystem::update()
 				}
 			}
 		}
+	}
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
 
+		for (i = _repo->beginGroup(GRP_MENU); i != _repo->endGroup(GRP_MENU); ++i) {
+			GameObject *o = *i;
+			if (o->get(ATTR_SELECTION, "selected").toBool()) {
+
+				//Start Game Selected
+				if (o->get(ATTR_SELECTION, "menuNum").toInt() == 1) {
+					for (k = _repo->beginGroup(GRP_MENUACTION); k != _repo->endGroup(GRP_MENUACTION); ++k) {
+						GameObject *menuAction = *k;
+						menuAction->set(ATTR_MENUACTION, "startGame", true, this);
+					}
+				}
+			}
+		}
 	}
 }
 

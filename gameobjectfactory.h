@@ -25,8 +25,9 @@ public:
 																						   System *system);
 	static GameObject* newPlatformObject(int x, int y, int width, int height,  System *system);
 	static GameObject* newRefereeObject(System *system);
-	static GameObject* newGameStateObject(System *system);
-	static GameObject* newMenuObject(int x, int y, int size, bool selectable, bool selected, sf::Font *font, std::string text, System *system);
+	static GameObject* newGameStateObject(bool inGame, bool load, System *system);
+	static GameObject* newMenuObject(int x, int y, int size, int menuNum, bool selectable, bool selected, sf::Font *font, std::string text, System *system);
+	static GameObject* newMenuActionObject(System *system);
 };
 
 #endif // GAMEOBJECTFACTORY_H
