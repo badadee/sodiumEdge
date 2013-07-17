@@ -64,6 +64,14 @@ GameObject* Repository::newMenuObject(int x, int y, int size, bool selectable, b
     return newObject;
 }
 
+GameObject* Repository::newGameUIObject(int x, int y, int size, int player, bool visible, sf::Font *font, std::string text, System *system)
+{
+    GameObject *newObject = GameObjectFactory::newGameUIObject(x, y, size, player, visible, font, text, system);
+    _gameObjectManager->push_back(newObject);
+    _groupManager->updateRegistry(newObject);
+    return newObject;
+}
+
 GameObject* Repository::attach(GameObject *object, AttributeType attributeType)
 {
     object->insert(attributeType);

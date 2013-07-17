@@ -50,6 +50,11 @@ Attribute* AttributeFactory::create(AttributeType type)
 			(*newAttribute)["roundEnd"] = 0;
 			(*newAttribute)["winner"] = 0;
 			(*newAttribute)["paused"] = 0;
+			(*newAttribute)["roundNum"] = 0;
+			(*newAttribute)["p1score"] = 0;
+			(*newAttribute)["p2score"] = 0;
+			(*newAttribute)["GrandWinner"] = 0;
+			(*newAttribute)["visible"] = 0;
 			break;
 
 		case ATTR_GAMESTATE:

@@ -29,7 +29,8 @@ void LoadingSystem::update()
 					_repo->newMenuObject(250, 90, 100, false, false, _font, "EDGE", this);
 					_repo->newMenuObject(300, 300, 30, true, true, _font, "START GAME", this);
 					_repo->newMenuObject(300, 330, 30, true, false, _font, "CLEAR WINS", this);
-					
+					_repo->newGameUIObject(300, 330, 30, false, false,_font,"PLAYER1 WINS", this);
+					_repo->newGameUIObject(300, 330, 30, false, false,_font,"PLAYER2 WINS", this);
 					o->set(ATTR_GAMESTATE, "load", false, this);
 					break;
 

@@ -4,6 +4,7 @@
 #include "rendersystem.h"
 #include "physicssystem.h"
 #include "collisionsystem.h"
+#include "scoresystem.h"
 
 Repository* GameInitializer::initializeRepository()
 {
@@ -38,6 +39,8 @@ std::list<System*> GameInitializer::initializeGameSystems(sf::RenderWindow *wind
 	CollisionSystem *collisionSystem = new CollisionSystem(repo);
 	systemList.push_back(collisionSystem);
 
+	ScoreSystem *scoreSystem = new ScoreSystem(repo);
+	systemList.push_back(scoreSystem);
 	//Group creation
 	repo->newGroup(GRP_GAMESTATE, ATTR_GAMESTATE);
 	repo->newGroup(GRP_PLAYERS, ATTR_POSITION, ATTR_VELOCITY, ATTR_PLAYERSTATE, ATTR_KEYMAP);
@@ -49,7 +52,7 @@ std::list<System*> GameInitializer::initializeGameSystems(sf::RenderWindow *wind
 	repo->newGroup(GRP_MENUTEXT, ATTR_TEXT, ATTR_SELECTION);
 	repo->newGroup(GRP_PLATFORM, ATTR_POSITION,ATTR_RECTANGLE,ATTR_STATIC);
 	repo->newGroup(GRP_GAMEUTIL, ATTR_POSITION,ATTR_ROUNDSTATE);
-
+	repo->newGroup(GRP_ROUNDDISP,ATTR_TEXT,ATTR_ROUNDSTATE);
 	//Initial Game State Object for the Loading System
 	repo->newGameStateObject(loadingSystem);
 

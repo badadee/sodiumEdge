@@ -50,4 +50,15 @@ void RenderSystem::update()
 
 		_window->draw(*text);
     }
+
+	//Draw score
+	for (i = _repo->beginGroup(GRP_ROUNDDISP); i != _repo->endGroup(GRP_ROUNDDISP); ++i) {
+        GameObject *o = *i;
+		
+		if(o->get(ATTR_ROUNDSTATE,"visible").toBool()){
+		sf::Text *text = o->get(ATTR_TEXT, "text").toText();
+
+		_window->draw(*text);
+		}
+    }
 }

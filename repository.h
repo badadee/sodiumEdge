@@ -32,6 +32,7 @@ public:
 	GameObject* newRefereeObject(System *system);
 	GameObject* newGameStateObject(System *system);
 	GameObject* newMenuObject(int x, int y, int size, bool selectable, bool selected, sf::Font *font, std::string text, System *system);
+	GameObject* newGameUIObject(int x, int y, int size, int player, bool visible, sf::Font *font, std::string text, System *system);
     GameObject* attach(GameObject* object, AttributeType attributeType);
     GameObject* detach(GameObject* object, AttributeType attributeType);
     ObjectList::iterator beginGroup(GroupType groupType);

@@ -111,6 +111,9 @@ GameObject* GameObjectFactory::newRefereeObject(System *system)
 	obj->set(ATTR_ROUNDSTATE,"roundEnd",false,system);
 	obj->set(ATTR_ROUNDSTATE,"paused",false,system);
 	obj->set(ATTR_ROUNDSTATE,"winner",NOBODY,system); //nobody nobody but you~
+	obj->set(ATTR_ROUNDSTATE,"p1score",0,system);
+	obj->set(ATTR_ROUNDSTATE,"p2score",0,system);
+	obj->set(ATTR_ROUNDSTATE,"GrandWinner",NOBODY,system);
 
 	//obj->set(ATTR_STATIC, "static", true, system);
 
@@ -122,7 +125,7 @@ GameObject* GameObjectFactory::newGameStateObject(System *system)
     GameObject *obj = new GameObject();
 	obj->insert(ATTR_GAMESTATE);
 
-    obj->set(ATTR_GAMESTATE, "inGame", false, system);
+    obj->set(ATTR_GAMESTATE, "inGame", true, system);
 	obj->set(ATTR_GAMESTATE, "load", true, system);
 
     return obj;
@@ -146,6 +149,28 @@ GameObject* GameObjectFactory::newMenuObject(int x, int y, int size, bool select
 		obj->insert(ATTR_SELECTION);
 		obj->set(ATTR_SELECTION, "selected", selected, system);
 	}
+	
+	obj->set(ATTR_TEXT, "text", t, system);
+
+	return obj;
+}
+GameObject* GameObjectFactory::newGameUIObject(int x, int y, int size, int player, bool visible, sf::Font *font, std::string text, System *system)
+{
+	GameObject *obj = new GameObject();
+	obj->insert(ATTR_TEXT);
+	obj->insert(ATTR_ROUNDSTATE);
+	obj->set(ATTR_ROUNDSTATE,"winner",player,system);
+	obj->set(ATTR_ROUNDSTATE,"visible",visible,system);
+	sf::Text *t = new sf::Text();
+
+	t->setFont(*font);
+	t->setString(text);
+	t->setCharacterSize(size);
+	t->setStyle(sf::Text::Regular);
+	t->setPosition((float)x,(float) y);
+	t->setColor(sf::Color::White);
+
+
 	
 	obj->set(ATTR_TEXT, "text", t, system);
 

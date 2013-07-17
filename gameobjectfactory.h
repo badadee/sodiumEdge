@@ -27,6 +27,7 @@ public:
 	static GameObject* newRefereeObject(System *system);
 	static GameObject* newGameStateObject(System *system);
 	static GameObject* newMenuObject(int x, int y, int size, bool selectable, bool selected, sf::Font *font, std::string text, System *system);
+	static GameObject* newGameUIObject(int x, int y, int size, int player, bool selected, sf::Font *font, std::string text, System *system);
 };
 
 #endif // GAMEOBJECTFACTORY_H
