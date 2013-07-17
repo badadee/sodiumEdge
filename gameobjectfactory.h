@@ -26,6 +26,7 @@ public:
 	static GameObject* newPlatformObject(int x, int y, int width, int height,  System *system);
 	static GameObject* newRefereeObject(System *system);
 	static GameObject* newGameStateObject(System *system);
+	static GameObject* newMenuObject(int x, int y, int size, sf::Font *font, std::string text, System *system);
 };
 
 #endif // GAMEOBJECTFACTORY_H

@@ -62,7 +62,6 @@ void InputSystem::update()
 			swordObject->set(ATTR_VELOCITY, "yVelocity", -10, this);
 			swordObject->set(ATTR_SWORDSTATE, "down", false, this);
 		}
-
     }
 }
 

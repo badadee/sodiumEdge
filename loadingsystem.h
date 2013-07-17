@@ -17,6 +17,7 @@ public:
     virtual void update();
 private:
 	Repository *_repo;
+	sf::Font *_font;
 };
 
 #endif // LOADINGSYSTEM_H

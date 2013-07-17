@@ -1,8 +1,18 @@
 #include <iostream>
+#include <signal.h>
 #include "loadingsystem.h"
 
 LoadingSystem::LoadingSystem(Repository *repo)
 {
+	sf::Font *font = new sf::Font();
+
+	if (!font->loadFromFile("visitor1.ttf"))
+	{
+		std::cout << "CANNOT OPEN FONT FILE" << std::endl;
+		raise(SIGABRT);
+	}
+
+	_font = font;
     _repo = repo;
 }
 
@@ -15,6 +25,11 @@ void LoadingSystem::update()
 		if (o->get(ATTR_GAMESTATE, "load").toBool()) {
 			switch (o->get(ATTR_GAMESTATE, "inGame").toBool()) {
 				case false:
+					_repo->newMenuObject(230, 20, 100, _font, "SODIUM", this);
+					_repo->newMenuObject(250, 90, 100, _font, "EDGE", this);
+					_repo->newMenuObject(300, 300, 30, _font, "START GAME", this);
+					
+					o->set(ATTR_GAMESTATE, "load", false, this);
 					break;
 
 				case true:					
@@ -36,8 +51,6 @@ void LoadingSystem::update()
 					_repo->newRefereeObject(this);
 
 					o->set(ATTR_GAMESTATE, "load", false, this);
-					break;
-				default:
 					break;
 			}
 		}

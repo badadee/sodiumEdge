@@ -12,6 +12,8 @@ int main()
 	std::list<System*> systemList = GameInitializer::initializeGameSystems(window, repo);
 	std::list<System*>::iterator i;
 
+	// Draw it
+
     while (window->isOpen())
     {
         sf::Event event;
@@ -28,7 +30,6 @@ int main()
 			System *s = *i;
 			s->update();
 		}
-
         window->display();
     }
 
