@@ -115,12 +115,19 @@ void ScoreSystem::returnPlayerPos (){
 			p->set(ATTR_VELOCITY,"x",0,this);
 			p->set(ATTR_VELOCITY,"y",0,this);
 			p->set(ATTR_SWORDSTATE,"held",true,this);
+			p->set(ATTR_SWORDSTATE,"up",false,this);
+			p->set(ATTR_SWORDSTATE,"down",false,this);
+			p->set(ATTR_SWORDSTATE,"thrustFrame",0,this);
 		}else{
 			p->set(ATTR_POSITION,"x",620, this);
 			p->set(ATTR_POSITION,"y",440, this);
 			p->set(ATTR_VELOCITY,"x",0,this);
 			p->set(ATTR_VELOCITY,"y",0,this);
 			p->set(ATTR_SWORDSTATE,"held",true,this);
+			
+			p->set(ATTR_SWORDSTATE,"thrustFrame",0,this);
+			p->set(ATTR_SWORDSTATE,"up",false,this);
+			p->set(ATTR_SWORDSTATE,"down",false,this);
 		}
 	}
 }

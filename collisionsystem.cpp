@@ -62,8 +62,10 @@ void CollisionSystem::update()
 					o->set(ATTR_PLAYERSTATE,"jumping",true,this);
 					GameObject *swordObject = this->getSword(o->get(ATTR_PLAYERSTATE,"playerNum").toInt());
 					swordObject->set(ATTR_SWORDSTATE,"held",false,this);
+					swordObject->set(ATTR_SWORDSTATE,"up",false,this);
+					swordObject->set(ATTR_SWORDSTATE,"down",false,this);
 					
-
+					swordObject->set(ATTR_SWORDSTATE,"thrustFrame",0,this);
 					int w = 0;
 				}else{
 					o->set(ATTR_PLAYERSTATE,"onPlatform", true, this);
