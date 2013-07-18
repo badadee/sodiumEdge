@@ -64,7 +64,8 @@ void CollisionSystem::update()
 					swordObject->set(ATTR_SWORDSTATE,"held",false,this);
 					swordObject->set(ATTR_SWORDSTATE,"up",false,this);
 					swordObject->set(ATTR_SWORDSTATE,"down",false,this);
-					
+					swordObject->set(ATTR_VELOCITY,"x",0,this);
+					swordObject->set(ATTR_VELOCITY,"y",0,this);
 					swordObject->set(ATTR_SWORDSTATE,"thrustFrame",0,this);
 					int w = 0;
 				}else{
