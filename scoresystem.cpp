@@ -98,9 +98,13 @@ void ScoreSystem::returnPlayerPos (){
 		if(p->get(ATTR_PLAYERSTATE,"playerNum").toInt() == 1){
 			p->set(ATTR_POSITION,"x",100, this);
 			p->set(ATTR_POSITION,"y",400, this);
+			p->set(ATTR_VELOCITY,"x",0,this);
+			p->set(ATTR_VELOCITY,"y",0,this);
 		}else{
 			p->set(ATTR_POSITION,"x",670, this);
 			p->set(ATTR_POSITION,"y",400, this);
+			p->set(ATTR_VELOCITY,"x",0,this);
+			p->set(ATTR_VELOCITY,"y",0,this);
 		}
 	}
 	for (j= _repo->beginGroup(GRP_SWORDS); j != _repo->endGroup(GRP_SWORDS); ++j) {
@@ -108,9 +112,15 @@ void ScoreSystem::returnPlayerPos (){
 		if(p->get(ATTR_SWORDSTATE,"heldBy").toInt() == 1){
 			p->set(ATTR_POSITION,"x",130, this);
 			p->set(ATTR_POSITION,"y",440, this);
+			p->set(ATTR_VELOCITY,"x",0,this);
+			p->set(ATTR_VELOCITY,"y",0,this);
+			p->set(ATTR_SWORDSTATE,"held",true,this);
 		}else{
 			p->set(ATTR_POSITION,"x",620, this);
 			p->set(ATTR_POSITION,"y",440, this);
+			p->set(ATTR_VELOCITY,"x",0,this);
+			p->set(ATTR_VELOCITY,"y",0,this);
+			p->set(ATTR_SWORDSTATE,"held",true,this);
 		}
 	}
 }

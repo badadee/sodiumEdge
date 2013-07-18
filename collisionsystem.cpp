@@ -17,7 +17,7 @@ void CollisionSystem::update()
 	list<GameObject*> platforms;
 	RectangleShape *rect;
 	RectangleShape *platformRect;
-
+	GameObject *referee = this->getReferee();
 	IntRect *r;
 	IntRect *p;
 	IntRect result;
@@ -37,15 +37,17 @@ void CollisionSystem::update()
 
 			int x = o->get(ATTR_POSITION, "x").toInt();
 			int y = o->get(ATTR_POSITION, "y").toInt();
+			int sizeX = o->get(ATTR_RECTANGLE,"width").toInt();
+			int sizeY = o->get(ATTR_RECTANGLE,"height").toInt();
 
-			r = new IntRect(x,y,rect->getSize().x,rect->getSize().y);
+			r = new IntRect(x,y,sizeX,sizeY);
 
 			//check rectangle object against all platform rectangules for collision
 			for(pi = platforms.begin(); pi != platforms.end(); ++pi){
 				GameObject *pl = *pi;
-				platformRect = pl->get(ATTR_SPRITE,"sprite").toSprite();
+				//platformRect = pl->get(ATTR_SPRITE,"sprite").toSprite();
 				p = new IntRect (pl->get(ATTR_POSITION, "x").toInt(),pl->get(ATTR_POSITION, "y").toInt(),
-					platformRect->getSize().x,platformRect->getSize().y);
+					pl->get(ATTR_RECTANGLE,"width").toInt(),pl->get(ATTR_RECTANGLE,"height").toInt());
 
 				//check for intersection
 				if(r->intersects(*p,result))
@@ -60,9 +62,21 @@ void CollisionSystem::update()
 					o->set(ATTR_PLAYERSTATE,"jumping",true,this);
 					GameObject *swordObject = this->getSword(o->get(ATTR_PLAYERSTATE,"playerNum").toInt());
 					swordObject->set(ATTR_SWORDSTATE,"held",false,this);
+					
+
 					int w = 0;
 				}else{
 					o->set(ATTR_PLAYERSTATE,"onPlatform", true, this);
+				}
+				if(r->top > 600 ){
+
+					referee->set(ATTR_ROUNDSTATE,"roundEnd",true,this);
+					if(o->get(ATTR_PLAYERSTATE,"playerNum").toInt() == 1){
+
+						referee->set(ATTR_ROUNDSTATE,"winner",2,this);
+					}else{
+						referee->set(ATTR_ROUNDSTATE,"winner",1,this);
+					}
 				}
 
 			}
@@ -73,13 +87,15 @@ void CollisionSystem::update()
 
 			int x = o->get(ATTR_POSITION, "x").toInt();
 			int y = o->get(ATTR_POSITION, "y").toInt();
+			int sizeX = o->get(ATTR_RECTANGLE,"width").toInt();
+			int sizeY = o->get(ATTR_RECTANGLE,"height").toInt();
 			GameObject *playerObject1 = this->getPlayer(1);
 			RectangleShape *player1 = playerObject1->get(ATTR_SPRITE, "sprite").toSprite();
 			GameObject *playerObject2 = this->getPlayer(2);
 			RectangleShape *player2 = playerObject2->get(ATTR_SPRITE, "sprite").toSprite();
-			int player1x = player1->getSize().x;
-			int player2x = player2->getSize().x;
-			int rectHeight = rect->getSize().y;
+			//int player1x = player1->getSize().x;
+			//int player2x = player2->getSize().x;
+			//int rectHeight = rect->getSize().y;
 			int swordHeldBy = 0;
 			int swordNum = 0;
 			int otherSwordNum = 0;
@@ -103,9 +119,9 @@ void CollisionSystem::update()
 			//check rectangle object against all platform rectangules for collision
 			for(pi = platforms.begin(); pi != platforms.end(); ++pi){
 				GameObject *pl = *pi;
-				platformRect = pl->get(ATTR_SPRITE,"sprite").toSprite();
+				//platformRect = pl->get(ATTR_SPRITE,"sprite").toSprite();
 				p = new IntRect (pl->get(ATTR_POSITION, "x").toInt(),pl->get(ATTR_POSITION, "y").toInt(),
-					platformRect->getSize().x,platformRect->getSize().y);
+					pl->get(ATTR_RECTANGLE,"width").toInt(),pl->get(ATTR_RECTANGLE,"height").toInt());
 
 				//check for intersection
 				if(r->intersects(*p,result))
@@ -113,10 +129,9 @@ void CollisionSystem::update()
 					o->set(ATTR_POSITION, "y", y-result.height, this);
 				}
 			}
+
 		}
 	}
-
-
 	for (i = _repo->beginGroup(GRP_SWORDS); i != _repo->endGroup(GRP_SWORDS); ++i) {
 		GameObject *o = *i;
 		int swordHeldBy = 0;
@@ -141,7 +156,7 @@ void CollisionSystem::update()
 			swordNum = 2;
 			otherSwordNum = 1;
 		}
-		GameObject *referee = this->getReferee();
+		
 		if(swordHeldBy ==0){
 			//cout<<"sword on ground\n";
 		}else if (swordHeldBy == swordNum){
@@ -200,13 +215,13 @@ void CollisionSystem::update()
 						//gotta bounce them back a lil
 					}
 				}
-				this->bounceBackPlayer();
 			}else if(r->intersects(*otherSwordRect)){
 				this->bounceBackPlayer();
 			}
 
 		}
 	}
+
 
 }
 GameObject* CollisionSystem::getReferee()
@@ -262,12 +277,12 @@ void CollisionSystem::bounceBackPlayer()
 		playerNum = o->get(ATTR_PLAYERSTATE,"playerNum").toInt();
 		GameObject *sword = getSword(playerNum);
 		if (o->get(ATTR_PLAYERSTATE, "facing").toInt() == RIGHT) {
-			o->set(ATTR_POSITION,"x", currentPosX-12, this);
-			sword->set(ATTR_POSITION,"x", sword->get(ATTR_POSITION,"x").toInt()-12, this);
+			o->set(ATTR_POSITION,"x", currentPosX-15, this);
+			sword->set(ATTR_POSITION,"x", sword->get(ATTR_POSITION,"x").toInt()-15, this);
 
 		}else{
-			o->set(ATTR_POSITION,"x",currentPosX+ 12, this);
-			sword->set(ATTR_POSITION,"x", sword->get(ATTR_POSITION,"x").toInt()+12, this);
+			o->set(ATTR_POSITION,"x",currentPosX+ 15, this);
+			sword->set(ATTR_POSITION,"x", sword->get(ATTR_POSITION,"x").toInt()+15, this);
 		}
 	}
 }
