@@ -37,14 +37,16 @@ std::list<System*> GameInitializer::initializeGameSystems(sf::RenderWindow *wind
 	PhysicsSystem *physicsSystem = new PhysicsSystem(repo);
 	systemList.push_back(physicsSystem);
 
-	RenderSystem *renderSystem = new RenderSystem(repo, window);
-	systemList.push_back(renderSystem);
-
 	CollisionSystem *collisionSystem = new CollisionSystem(repo);
 	systemList.push_back(collisionSystem);
 
 	ScoreSystem *scoresystem = new ScoreSystem(repo);
 	systemList.push_back(scoresystem);
+
+	RenderSystem *renderSystem = new RenderSystem(repo, window);
+	systemList.push_back(renderSystem);
+
+
 
 	//Group creation
 	repo->newGroup(GRP_GAMESTATE, ATTR_GAMESTATE);
