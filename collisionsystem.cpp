@@ -68,10 +68,16 @@ void CollisionSystem::update()
 					swordObject->set(ATTR_VELOCITY,"y",0,this);
 					swordObject->set(ATTR_SWORDSTATE,"thrustFrame",0,this);
 					int w = 0;
+					if((r->left >= (p->left+p->width))){
+
+						o->set(ATTR_VELOCITY,"xVelocity",10,this);
+					}else{
+						o->set(ATTR_VELOCITY,"xVelocity",-10,this);
+					}
 				}else{
 					o->set(ATTR_PLAYERSTATE,"onPlatform", true, this);
 				}
-				if(r->top > 500 ){
+				if(r->top > 450 ){
 
 					referee->set(ATTR_ROUNDSTATE,"roundEnd",true,this);
 					if(o->get(ATTR_PLAYERSTATE,"playerNum").toInt() == 1){
