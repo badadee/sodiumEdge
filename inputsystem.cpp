@@ -11,7 +11,13 @@ void InputSystem::update()
 	ObjectList::iterator i;
 	ObjectList::reverse_iterator j;
 	ObjectList::iterator k;
-	
+	ObjectList::iterator m;
+	GameObject *p = new GameObject();
+	for (m= _repo->beginGroup(GRP_GAMESTATE); m!= _repo->endGroup(GRP_GAMESTATE); ++m) {
+			p = *m;
+
+	}
+
     for (i = _repo->beginGroup(GRP_PLAYERS); i != _repo->endGroup(GRP_PLAYERS); ++i) {
         GameObject *playerObject = *i;
 		
@@ -26,6 +32,7 @@ void InputSystem::update()
 		sf::Keyboard::Key rightKey = playerObject->get(ATTR_KEYMAP, "right").toKey();
 		sf::Keyboard::Key jumpKey = playerObject->get(ATTR_KEYMAP, "jump").toKey();
 		sf::Keyboard::Key thrustKey = playerObject->get(ATTR_KEYMAP, "thrust").toKey();
+		sf::Keyboard::Key menuKey = playerObject->get(ATTR_KEYMAP, "bMenu").toKey();
 				
 		playerObject->set(ATTR_VELOCITY, "xVelocity", 0, this);
 		swordObject->set(ATTR_VELOCITY, "xVelocity", 0, this);
@@ -47,6 +54,10 @@ void InputSystem::update()
 
 		if (sf::Keyboard::isKeyPressed(thrustKey) && thrustFrame <= 0) {
 			swordObject->set(ATTR_SWORDSTATE, "thrustFrame", 40, this);
+		}
+		if (sf::Keyboard::isKeyPressed(menuKey) ) {
+				p->set(ATTR_GAMESTATE, "inGame", false, this);
+				p->set(ATTR_GAMESTATE, "load", true, this);
 		}
 
 		if (sf::Keyboard::isKeyPressed(upKey) && !sf::Keyboard::isKeyPressed(downKey) && !up) {

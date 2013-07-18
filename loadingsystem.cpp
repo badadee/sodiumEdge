@@ -43,6 +43,7 @@ void LoadingSystem::update()
 
 			case true:		
 				_repo->clean();
+				_repo->newMenuObject(20, 30, 20, 1, false, false, false, _font, "press R to menu", this);
 				_repo->newPlatformObject(100, 500, 600, 100, this);
 				_repo->newSwordObject(130, 440, 50, 9, 1, this);
 				_repo->newPlayerObject(100, 400, 30, 100, 1, sf::Keyboard::W,
@@ -51,6 +52,7 @@ void LoadingSystem::update()
 																sf::Keyboard::D,
 																sf::Keyboard::LShift,
 																sf::Keyboard::LControl,
+																sf::Keyboard::R,
 																this);
 				_repo->newSwordObject(620, 440, 50, 9, 2, this);
 				_repo->newPlayerObject(670, 400, 30, 100, 2, sf::Keyboard::Up,
@@ -59,6 +61,7 @@ void LoadingSystem::update()
 																sf::Keyboard::Right,
 																sf::Keyboard::RShift,
 																sf::Keyboard::RControl,
+																sf::Keyboard::R,
 																this);
 				_repo->newRefereeObject(this);
 				_repo->newGameStateObject(true, false, this);

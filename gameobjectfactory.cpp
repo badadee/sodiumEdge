@@ -38,6 +38,7 @@ GameObject* GameObjectFactory::newPlayerObject(int x, int y, int width, int heig
 																								   sf::Keyboard::Key right,
 																								   sf::Keyboard::Key jump,
 																								   sf::Keyboard::Key thrust,
+																								   sf::Keyboard::Key bMenu,
 																								   System *system)
 {
     GameObject *obj = new GameObject();
@@ -68,7 +69,7 @@ GameObject* GameObjectFactory::newPlayerObject(int x, int y, int width, int heig
 	obj->set(ATTR_KEYMAP, "right", right, system);
 	obj->set(ATTR_KEYMAP, "jump", jump, system);
 	obj->set(ATTR_KEYMAP, "thrust", thrust, system);
-
+	obj->set(ATTR_KEYMAP, "bMenu", bMenu, system);
 	sf::RectangleShape *sprite = new sf::RectangleShape(sf::Vector2f((float)width, (float)height));
 	sprite->setFillColor(sf::Color::Green);
 	sprite->setPosition((float)x, (float)y);

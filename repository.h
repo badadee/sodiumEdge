@@ -28,6 +28,7 @@ public:
 																				    sf::Keyboard::Key right,
 																				    sf::Keyboard::Key jump,
 																					sf::Keyboard::Key thrust,
+																					sf::Keyboard::Key bMenu,
 																					System *system);
 	GameObject* newPlatformObject(int x, int y, int width, int height, System *system);
 	GameObject* newRefereeObject(System *system);

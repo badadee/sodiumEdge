@@ -68,6 +68,7 @@ Attribute* AttributeFactory::create(AttributeType type)
 			(*newAttribute)["right"] = 0;
 			(*newAttribute)["jump"] = 0;
 			(*newAttribute)["thrust"] = 0;
+			(*newAttribute)["bMenu"] = 0;
 			break;
 
 		case ATTR_TEXT:
