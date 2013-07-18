@@ -1,25 +1,23 @@
 /*******************************************************************************
 
-    Physics System
-    Handles movement of game objects
+    MenuAction System
+	Handles Actions at the Main Menu
 
 *******************************************************************************/
 
-#ifndef SCORESYSTEM_H
-#define SCORESYSTEM_H
+#ifndef MENUACTIONSYSTEM_H
+#define MENUACTIONSYSTEM_H
 
 #include "system.h"
 #include "repository.h"
 
-class ScoreSystem : public System
+class MenuActionSystem : public System
 {
 public:
-	ScoreSystem(Repository *repo);
+	MenuActionSystem(Repository *repo);
     virtual void update();
-	
 private:
 	Repository *_repo;
-	void returnPlayerPos();
 };
 
-#endif // PHYSICSSYSTEM_H
+#endif // MENUACTIONSYSTEM_H

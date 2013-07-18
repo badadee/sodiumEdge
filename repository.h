@@ -27,19 +27,21 @@ public:
 																				    sf::Keyboard::Key left,
 																				    sf::Keyboard::Key right,
 																				    sf::Keyboard::Key jump,
+																					sf::Keyboard::Key thrust,
 																					System *system);
 	GameObject* newPlatformObject(int x, int y, int width, int height, System *system);
 	GameObject* newRefereeObject(System *system);
-	GameObject* newGameStateObject(System *system);
-	GameObject* newMenuObject(int x, int y, int size, bool selectable, bool selected, sf::Font *font, std::string text, System *system);
-	GameObject* newGameUIObject(int x, int y, int size, int player, bool visible, sf::Font *font, std::string text, System *system);
+	GameObject* newGameStateObject(bool inGame, bool load, System *system);
+	GameObject* newMenuObject(int x, int y, int size, int menuNum, bool selectable, bool selected, bool score, sf::Font *font, std::string text, System *system);
+	GameObject* newMenuActionObject(System *system);
     GameObject* attach(GameObject* object, AttributeType attributeType);
     GameObject* detach(GameObject* object, AttributeType attributeType);
+	GameObjectManager::iterator erase(GameObject* object);
     ObjectList::iterator beginGroup(GroupType groupType);
     ObjectList::iterator endGroup(GroupType groupType);
 	ObjectList::reverse_iterator rbeginGroup(GroupType groupType);
     ObjectList::reverse_iterator rendGroup(GroupType groupType);
-    void erase(GameObject* object);
+
 	void clean();
     void newGroup(GroupType group, AttributeType type);
     void newGroup(GroupType group, AttributeType type1, AttributeType type2);

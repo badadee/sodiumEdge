@@ -18,6 +18,7 @@ GameObject* GameObjectFactory::newSwordObject(int x, int y, int width, int heigh
 	obj->set(ATTR_VELOCITY, "xVelocity", 0, system);
 	obj->set(ATTR_VELOCITY, "yVelocity", 0, system);
 	obj->set(ATTR_SWORDSTATE, "heldBy", playerNum, system);
+	obj->set(ATTR_SWORDSTATE, "thrustFrame", 0, system);
 	obj->set(ATTR_SWORDSTATE, "up", false, system);
 	obj->set(ATTR_SWORDSTATE, "down", false, system);
 	obj->set(ATTR_SWORDSTATE, "held", true, system);
@@ -36,6 +37,7 @@ GameObject* GameObjectFactory::newPlayerObject(int x, int y, int width, int heig
 																								   sf::Keyboard::Key left,
 																								   sf::Keyboard::Key right,
 																								   sf::Keyboard::Key jump,
+																								   sf::Keyboard::Key thrust,
 																								   System *system)
 {
     GameObject *obj = new GameObject();
@@ -65,6 +67,7 @@ GameObject* GameObjectFactory::newPlayerObject(int x, int y, int width, int heig
 	obj->set(ATTR_KEYMAP, "left", left, system);
 	obj->set(ATTR_KEYMAP, "right", right, system);
 	obj->set(ATTR_KEYMAP, "jump", jump, system);
+	obj->set(ATTR_KEYMAP, "thrust", thrust, system);
 
 	sf::RectangleShape *sprite = new sf::RectangleShape(sf::Vector2f((float)width, (float)height));
 	sprite->setFillColor(sf::Color::Green);
@@ -111,27 +114,26 @@ GameObject* GameObjectFactory::newRefereeObject(System *system)
 	obj->set(ATTR_ROUNDSTATE,"roundEnd",false,system);
 	obj->set(ATTR_ROUNDSTATE,"paused",false,system);
 	obj->set(ATTR_ROUNDSTATE,"winner",NOBODY,system); //nobody nobody but you~
-	obj->set(ATTR_ROUNDSTATE,"p1score",0,system);
+	obj->set(ATTR_ROUNDSTATE,"p1score", 0 , system);
 	obj->set(ATTR_ROUNDSTATE,"p2score",0,system);
-	obj->set(ATTR_ROUNDSTATE,"GrandWinner",NOBODY,system);
-
+	obj->set(ATTR_ROUNDSTATE,"roundNum",0,system);
 	//obj->set(ATTR_STATIC, "static", true, system);
 
     return obj;
 }
 
-GameObject* GameObjectFactory::newGameStateObject(System *system)
+GameObject* GameObjectFactory::newGameStateObject(bool inGame, bool load, System *system)
 {
     GameObject *obj = new GameObject();
 	obj->insert(ATTR_GAMESTATE);
 
-    obj->set(ATTR_GAMESTATE, "inGame", true, system);
-	obj->set(ATTR_GAMESTATE, "load", true, system);
+    obj->set(ATTR_GAMESTATE, "inGame", inGame, system);
+	obj->set(ATTR_GAMESTATE, "load", load, system);
 
     return obj;
 }
 
-GameObject* GameObjectFactory::newMenuObject(int x, int y, int size, bool selectable, bool selected, sf::Font *font, std::string text, System *system)
+GameObject* GameObjectFactory::newMenuObject(int x, int y, int size, int menuNum, bool selectable, bool selected, bool score, sf::Font *font, std::string text, System *system)
 {
 	GameObject *obj = new GameObject();
 	obj->insert(ATTR_TEXT);
@@ -148,31 +150,26 @@ GameObject* GameObjectFactory::newMenuObject(int x, int y, int size, bool select
 	if (selectable) {
 		obj->insert(ATTR_SELECTION);
 		obj->set(ATTR_SELECTION, "selected", selected, system);
+		obj->set(ATTR_SELECTION, "menuNum", menuNum, system);
+	}
+
+	if (score) {
+		obj->insert(ATTR_MENUSCORE);
+		obj->set(ATTR_MENUSCORE, "score", atoi(text.c_str()), system);
 	}
 	
 	obj->set(ATTR_TEXT, "text", t, system);
 
 	return obj;
 }
-GameObject* GameObjectFactory::newGameUIObject(int x, int y, int size, int player, bool visible, sf::Font *font, std::string text, System *system)
+
+GameObject* GameObjectFactory::newMenuActionObject(System *system)
 {
 	GameObject *obj = new GameObject();
-	obj->insert(ATTR_TEXT);
-	obj->insert(ATTR_ROUNDSTATE);
-	obj->set(ATTR_ROUNDSTATE,"winner",player,system);
-	obj->set(ATTR_ROUNDSTATE,"visible",visible,system);
-	sf::Text *t = new sf::Text();
+	obj->insert(ATTR_MENUACTION);
 
-	t->setFont(*font);
-	t->setString(text);
-	t->setCharacterSize(size);
-	t->setStyle(sf::Text::Regular);
-	t->setPosition((float)x,(float) y);
-	t->setColor(sf::Color::White);
-
-
-	
-	obj->set(ATTR_TEXT, "text", t, system);
+	obj->set(ATTR_MENUACTION, "startGame", false, system);
+	obj->set(ATTR_MENUACTION, "clearWins", false, system);
 
 	return obj;
 }

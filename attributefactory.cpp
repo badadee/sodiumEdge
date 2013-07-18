@@ -38,6 +38,7 @@ Attribute* AttributeFactory::create(AttributeType type)
 
 		case ATTR_SWORDSTATE:
 			(*newAttribute)["heldBy"] = 0;			//1 for player1, 2 for player2
+			(*newAttribute)["thrustFrame"] = 0;		//int frames left until thrust completes
 			(*newAttribute)["up"] = 0;				//bool true for sword held up
 			(*newAttribute)["down"] = 0;			//bool true for sword held down
 			break;
@@ -50,11 +51,9 @@ Attribute* AttributeFactory::create(AttributeType type)
 			(*newAttribute)["roundEnd"] = 0;
 			(*newAttribute)["winner"] = 0;
 			(*newAttribute)["paused"] = 0;
-			(*newAttribute)["roundNum"] = 0;
 			(*newAttribute)["p1score"] = 0;
 			(*newAttribute)["p2score"] = 0;
-			(*newAttribute)["GrandWinner"] = 0;
-			(*newAttribute)["visible"] = 0;
+			(*newAttribute)["roundNum"] = 0;
 			break;
 
 		case ATTR_GAMESTATE:
@@ -68,6 +67,7 @@ Attribute* AttributeFactory::create(AttributeType type)
 			(*newAttribute)["left"] = 0;
 			(*newAttribute)["right"] = 0;
 			(*newAttribute)["jump"] = 0;
+			(*newAttribute)["thrust"] = 0;
 			break;
 
 		case ATTR_TEXT:
@@ -75,7 +75,17 @@ Attribute* AttributeFactory::create(AttributeType type)
 			break;
 
 		case ATTR_SELECTION:
-			(*newAttribute)["selected"] = 0;
+			(*newAttribute)["selected"] = 0;		//bool true for selected menu object, default false except for first menu object
+			(*newAttribute)["menuNum"] = 0;			//int menu number
+			break;
+
+		case ATTR_MENUACTION:
+			(*newAttribute)["startGame"] = 0;		//bool true for initiating game start from menu, default false
+			(*newAttribute)["clearWins"] = 0;		//bool true for clearing player 1 and 2 wins from menu, default false
+			break;
+
+		case ATTR_MENUSCORE:
+			(*newAttribute)["score"] = 0;
 			break;
         // invalid AttributeType
         default:

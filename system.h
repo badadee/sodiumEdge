@@ -16,8 +16,11 @@ class System
 public:
 	virtual ~System() {};
     virtual void update() = 0;
+	SystemType type() {
+		return _name;
+	};
 
-private:
+protected:
     SystemType _name;
 };
 

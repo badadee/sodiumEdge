@@ -1,6 +1,7 @@
 #include <iostream>
 #include <signal.h>
 #include "loadingsystem.h"
+#include "statisticsio.h"
 
 LoadingSystem::LoadingSystem(Repository *repo)
 {
@@ -14,47 +15,55 @@ LoadingSystem::LoadingSystem(Repository *repo)
 
 	_font = font;
     _repo = repo;
+	_name = SYS_LOADING;
 }
 
 void LoadingSystem::update()
 {
-	ObjectList::iterator i;
-	for (i = _repo->beginGroup(GRP_GAMESTATE); i != _repo->endGroup(GRP_GAMESTATE); ++i) {
-		GameObject *o = *i;
+	ObjectList::iterator i = _repo->beginGroup(GRP_GAMESTATE);
+	GameObject *o = *i;
+	StatisticsIO *file = new StatisticsIO("scores.txt");
 
-		if (o->get(ATTR_GAMESTATE, "load").toBool()) {
-			switch (o->get(ATTR_GAMESTATE, "inGame").toBool()) {
-				case false:
-					_repo->newMenuObject(230, 20, 100, false, false, _font, "SODIUM", this);
-					_repo->newMenuObject(250, 90, 100, false, false, _font, "EDGE", this);
-					_repo->newMenuObject(300, 300, 30, true, true, _font, "START GAME", this);
-					_repo->newMenuObject(300, 330, 30, true, false, _font, "CLEAR WINS", this);
-					_repo->newGameUIObject(300, 330, 30, false, false,_font,"PLAYER1 WINS", this);
-					_repo->newGameUIObject(300, 330, 30, false, false,_font,"PLAYER2 WINS", this);
-					o->set(ATTR_GAMESTATE, "load", false, this);
-					break;
+	if (o->get(ATTR_GAMESTATE, "load").toBool()) {
+		switch (o->get(ATTR_GAMESTATE, "inGame").toBool()) {
+			case false:
+				_repo->clean();
+				_repo->newMenuObject(230, 20, 100, 0, false, false, false, _font, "SODIUM", this);
+				_repo->newMenuObject(250, 90, 100, 0, false, false, false, _font, "EDGE", this);
+				_repo->newMenuObject(50, 500, 50, 0, false, false, false, _font, "Player1: ", this);
+				_repo->newMenuObject(450, 500, 50, 0, false, false, false, _font, "Player2: ", this);
+				_repo->newMenuObject(270, 500, 50, 0, false, false, true, _font, std::to_string(file->getPlayerOneScore()), this);
+				_repo->newMenuObject(685, 500, 50, 0, false, false, true, _font, std::to_string(file->getPlayerTwoScore()), this);
+				_repo->newMenuObject(300, 300, 30, 1, true, true, false, _font, "START GAME", this);
+				_repo->newMenuObject(300, 330, 30, 2, true, false, false, _font, "CLEAR WINS", this);
+				_repo->newMenuActionObject(this);
+				_repo->newGameStateObject(false, false, this);
 
-				case true:					
-					_repo->newPlatformObject(100, 500, 600, 100, this);
-					_repo->newSwordObject(130, 440, 50, 9, 1, this);
-					_repo->newPlayerObject(100, 400, 30, 100, 1, sf::Keyboard::W,
-																 sf::Keyboard::S,
-																 sf::Keyboard::A,
-																 sf::Keyboard::D,
-																 sf::Keyboard::LShift,
-																 this);
-					_repo->newSwordObject(620, 440, 50, 9, 2, this);
-					_repo->newPlayerObject(670, 400, 30, 100, 2, sf::Keyboard::Up,
-																 sf::Keyboard::Down,
-																 sf::Keyboard::Left,
-																 sf::Keyboard::Right,
-																 sf::Keyboard::RShift,
-																 this);
-					_repo->newRefereeObject(this);
+				break;
 
-					o->set(ATTR_GAMESTATE, "load", false, this);
-					break;
-			}
+			case true:		
+				_repo->clean();
+				_repo->newPlatformObject(100, 500, 600, 100, this);
+				_repo->newSwordObject(130, 440, 50, 9, 1, this);
+				_repo->newPlayerObject(100, 400, 30, 100, 1, sf::Keyboard::W,
+																sf::Keyboard::S,
+																sf::Keyboard::A,
+																sf::Keyboard::D,
+																sf::Keyboard::LShift,
+																sf::Keyboard::LControl,
+																this);
+				_repo->newSwordObject(620, 440, 50, 9, 2, this);
+				_repo->newPlayerObject(670, 400, 30, 100, 2, sf::Keyboard::Up,
+																sf::Keyboard::Down,
+																sf::Keyboard::Left,
+																sf::Keyboard::Right,
+																sf::Keyboard::RShift,
+																sf::Keyboard::RControl,
+																this);
+				_repo->newRefereeObject(this);
+				_repo->newGameStateObject(true, false, this);
+
+				break;
 		}
 	}
 }

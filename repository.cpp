@@ -20,12 +20,14 @@ GameObject* Repository::newPlayerObject(int x, int y, int width, int height, int
 																							sf::Keyboard::Key left,
 																							sf::Keyboard::Key right,
 																							sf::Keyboard::Key jump,
+																							sf::Keyboard::Key thrust,
 																							System *system) {
 	GameObject *newObject = GameObjectFactory::newPlayerObject(x,y,width,height,playerNum,up,
 																						  down,
 																						  left,
 																						  right,
 																						  jump,
+																						  thrust,
 																						  system);
     _gameObjectManager->push_back(newObject);
     _groupManager->updateRegistry(newObject);
@@ -48,25 +50,25 @@ GameObject* Repository::newRefereeObject(System *system)
     return newObject;
 }
 
-GameObject* Repository::newGameStateObject(System *system)
+GameObject* Repository::newGameStateObject(bool inGame, bool load, System *system)
 {
-    GameObject *newObject = GameObjectFactory::newGameStateObject(system);
+    GameObject *newObject = GameObjectFactory::newGameStateObject(inGame, load, system);
     _gameObjectManager->push_back(newObject);
     _groupManager->updateRegistry(newObject);
     return newObject;
 }
 
-GameObject* Repository::newMenuObject(int x, int y, int size, bool selectable, bool selected, sf::Font *font, std::string text, System *system)
+GameObject* Repository::newMenuObject(int x, int y, int size, int menuNum, bool selectable, bool selected, bool score, sf::Font *font, std::string text, System *system)
 {
-    GameObject *newObject = GameObjectFactory::newMenuObject(x, y, size, selectable, selected, font, text, system);
+    GameObject *newObject = GameObjectFactory::newMenuObject(x, y, size, menuNum, selectable, selected, score, font, text, system);
     _gameObjectManager->push_back(newObject);
     _groupManager->updateRegistry(newObject);
     return newObject;
 }
 
-GameObject* Repository::newGameUIObject(int x, int y, int size, int player, bool visible, sf::Font *font, std::string text, System *system)
+GameObject* Repository::newMenuActionObject(System *system)
 {
-    GameObject *newObject = GameObjectFactory::newGameUIObject(x, y, size, player, visible, font, text, system);
+    GameObject *newObject = GameObjectFactory::newMenuActionObject(system);
     _gameObjectManager->push_back(newObject);
     _groupManager->updateRegistry(newObject);
     return newObject;
@@ -121,26 +123,31 @@ void Repository::newGroup(GroupType group, AttributeType type1, AttributeType ty
 }
 
 
-void Repository::erase(GameObject *object)
+GameObjectManager::iterator Repository::erase(GameObject *object)
 {
-    object->removeAll();
-    GameObjectManager::iterator pos = std::find(
-                _gameObjectManager->begin(),
-                _gameObjectManager->end(),
-                object);
-    _gameObjectManager->erase(pos);
-    _groupManager->updateRegistry(object);
-    delete object;
+	GameObjectManager::iterator newIterator;
+	object->removeAll();
+
+	GameObjectManager::iterator pos = std::find(
+		_gameObjectManager->begin(),
+		_gameObjectManager->end(),
+	object);
+
+	newIterator = _gameObjectManager->erase(pos);
+	_groupManager->updateRegistry(object);
+
+	delete object;
+	return newIterator;
 }
 
 void Repository::clean()
 {
 	GameObjectManager::iterator i;
 
-	for (i = _gameObjectManager->begin(); i != _gameObjectManager->end(); ++i)
+	for (i = _gameObjectManager->begin(); i != _gameObjectManager->end();)
 	{
 		GameObject *o = *i;
-		erase(o);
+		i = erase(o);
 	}
 }
 

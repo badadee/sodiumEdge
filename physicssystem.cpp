@@ -5,6 +5,7 @@
 PhysicsSystem::PhysicsSystem(Repository * repo)
 {
 	_repo = repo;
+	_name = SYS_PHYSICS;
 }
 
 void PhysicsSystem::update()
@@ -43,18 +44,44 @@ void PhysicsSystem::update()
 
 		int playerNum = playerObject->get(ATTR_PLAYERSTATE, "playerNum").toInt();
 		GameObject *swordObject = this->getSword(playerNum);
+		int thrustFrame = swordObject->get(ATTR_SWORDSTATE, "thrustFrame").toInt();
 		int x = swordObject->get(ATTR_POSITION, "x").toInt();
 		int y = swordObject->get(ATTR_POSITION, "y").toInt();
 		int xVelocity = playerObject->get(ATTR_VELOCITY, "xVelocity").toInt();
 		int yVelocity = playerObject->get(ATTR_VELOCITY, "yVelocity").toInt();
+		int facing = playerObject->get(ATTR_PLAYERSTATE, "facing").toInt();
 
 		if(swordObject->get(ATTR_SWORDSTATE,"held").toBool()){
-		x += xVelocity;
-		y += yVelocity;
+			x += xVelocity;
+			y += yVelocity;
 		}
 		else{
 			y += yVelocity;
 		}
+
+		if (thrustFrame > 0) {
+			if (facing == RIGHT) {
+				x += (thrustFrame - 20)/4;
+			}
+			if (facing == LEFT) {
+				x += (-thrustFrame + 20)/4;
+			}
+
+			thrustFrame--;
+
+			if (thrustFrame == 0)
+			{
+				if (facing == RIGHT) {
+					x -= 5;
+				}
+				if (facing == LEFT) {
+					x += 5;
+				}
+			}
+
+			swordObject->set(ATTR_SWORDSTATE, "thrustFrame", thrustFrame, this);
+		}
+
 		swordObject->set(ATTR_POSITION, "x", x, this);
 		swordObject->set(ATTR_POSITION, "y", y, this);
 	}

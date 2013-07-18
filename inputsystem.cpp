@@ -3,11 +3,15 @@
 InputSystem::InputSystem(Repository * repo)
 {
     _repo = repo;
+	_name = SYS_INPUT;
 }
 
 void InputSystem::update()
 {
 	ObjectList::iterator i;
+	ObjectList::reverse_iterator j;
+	ObjectList::iterator k;
+	
     for (i = _repo->beginGroup(GRP_PLAYERS); i != _repo->endGroup(GRP_PLAYERS); ++i) {
         GameObject *playerObject = *i;
 		
@@ -15,11 +19,13 @@ void InputSystem::update()
 		GameObject *swordObject = this->getSword(playerNum);
 		bool up = swordObject->get(ATTR_SWORDSTATE, "up").toBool();
 		bool down = swordObject->get(ATTR_SWORDSTATE, "down").toBool();
+		int thrustFrame = swordObject->get(ATTR_SWORDSTATE, "thrustFrame").toInt();
 		sf::Keyboard::Key upKey = playerObject->get(ATTR_KEYMAP, "up").toKey();
 		sf::Keyboard::Key downKey = playerObject->get(ATTR_KEYMAP, "down").toKey();
 		sf::Keyboard::Key leftKey = playerObject->get(ATTR_KEYMAP, "left").toKey();
 		sf::Keyboard::Key rightKey = playerObject->get(ATTR_KEYMAP, "right").toKey();
 		sf::Keyboard::Key jumpKey = playerObject->get(ATTR_KEYMAP, "jump").toKey();
+		sf::Keyboard::Key thrustKey = playerObject->get(ATTR_KEYMAP, "thrust").toKey();
 				
 		playerObject->set(ATTR_VELOCITY, "xVelocity", 0, this);
 		swordObject->set(ATTR_VELOCITY, "xVelocity", 0, this);
@@ -39,31 +45,35 @@ void InputSystem::update()
 			}
 		}
 
+		if (sf::Keyboard::isKeyPressed(thrustKey) && thrustFrame <= 0) {
+			swordObject->set(ATTR_SWORDSTATE, "thrustFrame", 40, this);
+		}
+
 		if (sf::Keyboard::isKeyPressed(upKey) && !sf::Keyboard::isKeyPressed(downKey) && !up) {
-			swordObject->set(ATTR_VELOCITY, "yVelocity", -11, this);
+			swordObject->set(ATTR_VELOCITY, "yVelocity", -10, this);
 			swordObject->set(ATTR_SWORDSTATE, "up", true, this);
 			continue;
 		}
 		if (sf::Keyboard::isKeyPressed(downKey) && !sf::Keyboard::isKeyPressed(upKey) && !down) {
-			swordObject->set(ATTR_VELOCITY, "yVelocity", 11, this);
+			swordObject->set(ATTR_VELOCITY, "yVelocity", 10, this);
 			swordObject->set(ATTR_SWORDSTATE, "down", true, this);
 			continue;
 		}
 
 		swordObject->set(ATTR_VELOCITY, "yVelocity", 0, this);				
 		if (!sf::Keyboard::isKeyPressed(upKey) && up) {
-			swordObject->set(ATTR_VELOCITY, "yVelocity", 11, this);
+			swordObject->set(ATTR_VELOCITY, "yVelocity", 10, this);
 			swordObject->set(ATTR_SWORDSTATE, "up", false, this);
 		}
 
 		if (!sf::Keyboard::isKeyPressed(downKey) && down) {
-			swordObject->set(ATTR_VELOCITY, "yVelocity", -11, this);
+			swordObject->set(ATTR_VELOCITY, "yVelocity", -10, this);
 			swordObject->set(ATTR_SWORDSTATE, "down", false, this);
 		}
     }
 
 	//Menu Selection Inputs
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) && !(sf::Keyboard::isKeyPressed(sf::Keyboard::Up)))
 	{
 		i = _repo->beginGroup(GRP_MENU);
 		GameObject *previous;
@@ -84,10 +94,8 @@ void InputSystem::update()
 		}
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up) && !(sf::Keyboard::isKeyPressed(sf::Keyboard::Down)))
 	{
-		ObjectList::reverse_iterator j;
-
 		j = _repo->rbeginGroup(GRP_MENU);
 		GameObject *previous;
 
@@ -105,8 +113,31 @@ void InputSystem::update()
 				}
 			}
 		}
+	}
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) {
 
+		for (i = _repo->beginGroup(GRP_MENU); i != _repo->endGroup(GRP_MENU); ++i) {
+			GameObject *o = *i;
+			if (o->get(ATTR_SELECTION, "selected").toBool()) {
+
+				//Start Game Selected
+				if (o->get(ATTR_SELECTION, "menuNum").toInt() == 1) {
+					for (k = _repo->beginGroup(GRP_MENUACTION); k != _repo->endGroup(GRP_MENUACTION); ++k) {
+						GameObject *menuAction = *k;
+						menuAction->set(ATTR_MENUACTION, "startGame", true, this);
+					}
+				}
+
+				//Clear Wins Selected
+				if (o->get(ATTR_SELECTION, "menuNum").toInt() == 2) {
+					for (k = _repo->beginGroup(GRP_MENUACTION); k != _repo->endGroup(GRP_MENUACTION); ++k) {
+						GameObject *menuAction = *k;
+						menuAction->set(ATTR_MENUACTION, "clearWins", true, this);
+					}
+				}
+			}
+		}
 	}
 }
 

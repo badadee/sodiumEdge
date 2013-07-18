@@ -7,6 +7,7 @@ RenderSystem::RenderSystem(Repository *repo, sf::RenderWindow *window)
 {
     _repo = repo;
 	_window = window;
+	_name = SYS_RENDER;
 }
 
 void RenderSystem::update()
@@ -43,22 +44,21 @@ void RenderSystem::update()
 		_window->draw(*text);
     }
 
+	//Updating score
+	for (i = _repo->beginGroup(GRP_MENUSCORE); i != _repo->endGroup(GRP_MENUSCORE); ++i) {
+		GameObject *menuScore = *i;
+
+		int score = menuScore->get(ATTR_MENUSCORE, "score").toInt();
+		sf::Text *text = menuScore->get(ATTR_TEXT, "text").toText();
+
+		text->setString(std::to_string(score));
+	}		
+
 	//Drawing Text
 	for (i = _repo->beginGroup(GRP_RENDERTEXT); i != _repo->endGroup(GRP_RENDERTEXT); ++i) {
         GameObject *o = *i;
 		sf::Text *text = o->get(ATTR_TEXT, "text").toText();
 
 		_window->draw(*text);
-    }
-
-	//Draw score
-	for (i = _repo->beginGroup(GRP_ROUNDDISP); i != _repo->endGroup(GRP_ROUNDDISP); ++i) {
-        GameObject *o = *i;
-		
-		if(o->get(ATTR_ROUNDSTATE,"visible").toBool()){
-		sf::Text *text = o->get(ATTR_TEXT, "text").toText();
-
-		_window->draw(*text);
-		}
     }
 }
