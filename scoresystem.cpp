@@ -1,4 +1,6 @@
 #include "scoresystem.h"
+
+#include "statisticsio.h"
 #include <list>
 #include <iostream>
 using namespace std;
@@ -17,6 +19,7 @@ void ScoreSystem::update()
 	ObjectList::iterator j;
 	ObjectList::iterator k;
 	ObjectList::iterator l;
+	StatisticsIO *file = new StatisticsIO("scores.txt");
 	GameObject *p = new GameObject();
 	int player1score = 0;
 	int player2score = 0;
@@ -51,26 +54,34 @@ void ScoreSystem::update()
 				o->set(ATTR_ROUNDSTATE,"p2score",player2score,this);
 				o->set(ATTR_ROUNDSTATE,"p1score",player1score,this);
 				o->set(ATTR_ROUNDSTATE,"roundEnd",false,this);
-				
+
 			}
 			if(player1score == 3){
-			/*o->set(ATTR_ROUNDSTATE,"GrandWinner",PLAYER1,this);
-			for (k = _repo->beginGroup(GRP_ROUNDDISP); k != _repo->endGroup(GRP_ROUNDDISP); ++k) {
-			GameObject *o = *k;
-			if(o->get(ATTR_ROUNDSTATE,"winner").toInt() == PLAYER1){
-			o->set(ATTR_ROUNDSTATE,"visible",true,this);
-			}
-			}*/
+				/*o->set(ATTR_ROUNDSTATE,"GrandWinner",PLAYER1,this);
+				for (k = _repo->beginGroup(GRP_ROUNDDISP); k != _repo->endGroup(GRP_ROUNDDISP); ++k) {
+				GameObject *o = *k;
+				if(o->get(ATTR_ROUNDSTATE,"winner").toInt() == PLAYER1){
+				o->set(ATTR_ROUNDSTATE,"visible",true,this);
+				}
+				}*/
+				int playerOneScore = file ->getPlayerOneScore();
+				playerOneScore++;
+				file->setPlayerOneScore(playerOneScore);
+
 				p->set(ATTR_GAMESTATE, "inGame", false, this);
 				p->set(ATTR_GAMESTATE, "load", true, this);
 			}else if (player2score == 3){
-			/*o->set(ATTR_ROUNDSTATE,"GrandWinner",PLAYER2,this);
-			for (l = _repo->beginGroup(GRP_ROUNDDISP); l != _repo->endGroup(GRP_ROUNDDISP); ++l) {
-			GameObject *o = *l;
-			if(o->get(ATTR_ROUNDSTATE,"winner").toInt() == PLAYER2){
-			o->set(ATTR_ROUNDSTATE,"visible",true,this);
-			}
-			}*/
+				/*o->set(ATTR_ROUNDSTATE,"GrandWinner",PLAYER2,this);
+				for (l = _repo->beginGroup(GRP_ROUNDDISP); l != _repo->endGroup(GRP_ROUNDDISP); ++l) {
+				GameObject *o = *l;
+				if(o->get(ATTR_ROUNDSTATE,"winner").toInt() == PLAYER2){
+				o->set(ATTR_ROUNDSTATE,"visible",true,this);
+				}
+				}*/
+
+				int playerTwoScore = file ->getPlayerTwoScore();
+				playerTwoScore++;
+				file->setPlayerTwoScore(playerTwoScore);
 				p->set(ATTR_GAMESTATE, "inGame", false, this);
 				p->set(ATTR_GAMESTATE, "load", true, this);
 

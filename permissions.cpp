@@ -13,6 +13,7 @@ bool Permissions::isAllowed(AttributeType attribute, System *system)
 		else if (attribute = ATTR_GAMESTATE) return true;
 		else if (attribute = ATTR_PLAYERSTATE) return true;
 		else if (attribute = ATTR_SWORDSTATE) return true;
+		else if (attribute = ATTR_MENUSCORE) return true;
 	
 	} else if (system->type() == SYS_INPUT) {
 		if (attribute = ATTR_VELOCITY) return true;
