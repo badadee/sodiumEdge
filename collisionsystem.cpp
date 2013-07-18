@@ -71,7 +71,7 @@ void CollisionSystem::update()
 				}else{
 					o->set(ATTR_PLAYERSTATE,"onPlatform", true, this);
 				}
-				if(r->top > 600 ){
+				if(r->top > 500 ){
 
 					referee->set(ATTR_ROUNDSTATE,"roundEnd",true,this);
 					if(o->get(ATTR_PLAYERSTATE,"playerNum").toInt() == 1){
@@ -168,13 +168,16 @@ void CollisionSystem::update()
 			r = new IntRect(x,y,sizeX,sizeY);
 			GameObject *otherSword = this->getSword(otherSwordNum);
 			GameObject *otherPlayerRec = this->getPlayer(otherSwordNum);
-
+			GameObject *myPlayer = this->getPlayer(swordNum);
 			IntRect *otherSwordRect = new IntRect(otherSword->get(ATTR_POSITION,"x").toInt(),otherSword->get(ATTR_POSITION,"y").toInt(),
 				otherSword->get(ATTR_RECTANGLE,"width").toInt(),otherSword->get(ATTR_RECTANGLE,"height").toInt());
 			IntRect *otherPlayerRect = new IntRect(otherPlayerRec->get(ATTR_POSITION,"x").toInt(),otherPlayerRec->get(ATTR_POSITION,"y").toInt(),
 				otherPlayerRec->get(ATTR_RECTANGLE,"width").toInt(),otherPlayerRec->get(ATTR_RECTANGLE,"height").toInt());
+			IntRect *myPlayerRect = new IntRect(myPlayer->get(ATTR_POSITION,"x").toInt(),myPlayer->get(ATTR_POSITION,"y").toInt(),
+				myPlayer->get(ATTR_RECTANGLE,"width").toInt(),myPlayer->get(ATTR_RECTANGLE,"height").toInt());
 
-			if(r->intersects(*otherPlayerRect)){
+
+			if(r->intersects(*otherPlayerRect)&&myPlayerRect->intersects(*otherSwordRect)){
 				//code for 3
 				//if other guy has up then GG for him
 				if(otherSword->get(ATTR_SWORDSTATE,"up").toBool()){
@@ -218,6 +221,11 @@ void CollisionSystem::update()
 						//gotta bounce them back a lil
 					}
 				}
+			}else if(r->intersects(*otherPlayerRect)&&!myPlayerRect->intersects(*otherSwordRect)){
+				referee->set(ATTR_ROUNDSTATE,"winner",swordNum,this);
+							referee->set(ATTR_ROUNDSTATE,"roundEnd",true,this);
+							cout<<"player "<<swordNum<<" wins!\n";
+
 			}else if(r->intersects(*otherSwordRect)){
 				this->bounceBackPlayer();
 			}

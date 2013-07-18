@@ -59,6 +59,7 @@ void ScoreSystem::update()
 				this->returnPlayerPos();
 				o->set(ATTR_ROUNDSTATE,"p1score",player1score,this);
 				o->set(ATTR_ROUNDSTATE,"roundEnd",false,this);
+				o->set(ATTR_ROUNDSTATE,"winner",NOBODY,this);
 			}else if(score == PLAYER2){
 				player2score++;
 				
@@ -66,6 +67,8 @@ void ScoreSystem::update()
 				this->returnPlayerPos();
 				o->set(ATTR_ROUNDSTATE,"p2score",player2score,this);
 				o->set(ATTR_ROUNDSTATE,"roundEnd",false,this);
+				
+				o->set(ATTR_ROUNDSTATE,"winner",NOBODY,this);
 			}else if(score == DKO){
 				player2score++;
 				player1score++;
@@ -76,6 +79,8 @@ void ScoreSystem::update()
 				o->set(ATTR_ROUNDSTATE,"p2score",player2score,this);
 				o->set(ATTR_ROUNDSTATE,"p1score",player1score,this);
 				o->set(ATTR_ROUNDSTATE,"roundEnd",false,this);
+				
+				o->set(ATTR_ROUNDSTATE,"winner",NOBODY,this);
 
 			}
 			if(player1score == 3){
