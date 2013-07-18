@@ -45,9 +45,9 @@ void LoadingSystem::update()
 				_repo->clean();
 				_repo->newMenuObject(20, 30, 20, 1, false, false, false, _font, "press R to menu", this);
 				_repo->newMenuObject(285,40, 50, 1, false, false, false, _font, "P1 vs P2", this);
-				_repo->newMenuObject(350,80, 50, 1, true, false, true, _font, "0", this);
+				_repo->newMenuObject(350,80, 50, 2, true, false, true, _font, "0", this);
 				_repo->newMenuObject(390,80, 50, 1, false, false, false, _font, "\:", this);
-				_repo->newMenuObject(410,80, 50, 2, true, false, true, _font, "0", this);
+				_repo->newMenuObject(410,80, 50, 1, true, false, true, _font, "0", this);
 				_repo->newPlatformObject(100, 500, 600, 100, this);
 				_repo->newSwordObject(150, 440, 50, 9, 1, this);
 				_repo->newPlayerObject(120, 400, 30, 100, 1, sf::Keyboard::W,
